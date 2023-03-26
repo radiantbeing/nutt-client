@@ -14,8 +14,8 @@ function App() {
       {/* <SignUp /> */}
       {/* <UserInfoForm /> */}
       {/* <HealthGoalSetting /> */}
-      {/* <ActivityEstimation /> */}
-      <RecommendedIntakeResult />
+      <ActivityEstimation />
+      {/* <RecommendedIntakeResult /> */}
     </>
   );
 }

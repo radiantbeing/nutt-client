@@ -16,15 +16,18 @@ import {
   NumberInputStepper,
   VStack,
 } from "@chakra-ui/react";
+import { BaseLayout } from "../layouts/BaseLayout";
+import { BottomNavigation } from "../layouts/BottomNavigation";
+import { Header } from "../layouts/Header";
+import { MainContent } from "../layouts/MainContent";
 import { OutlineButton, FilledButton, CardButton } from "./Button";
 import { ChatBot } from "./ChatBot";
-import { BottomNavigation, Header, Layout, Main } from "./Layout";
 
 export function SignUp() {
   return (
-    <Layout>
+    <BaseLayout>
       <Header text="회원가입" hasPrev />
-      <Main>
+      <MainContent>
         <ChatBot message="반갑습니다! 저는 AI 식단 관리 도우미 ‘뉴트(Nutt)입니다. 앱의 모든 기능을 사용하기 위해 회원가입을 진행해주세요." />
         <Stack spacing={6} w="full">
           <FormControl>
@@ -48,20 +51,20 @@ export function SignUp() {
             )}
           </FormControl>
         </Stack>
-      </Main>
+      </MainContent>
       <BottomNavigation>
         <OutlineButton>로그인</OutlineButton>
         <FilledButton>회원가입</FilledButton>
       </BottomNavigation>
-    </Layout>
+    </BaseLayout>
   );
 }
 
 export function UserInfoForm() {
   return (
-    <Layout>
+    <BaseLayout>
       <Header text="기초 정보 수집" hasPrev />
-      <Main>
+      <MainContent>
         <ChatBot message="이름과 함께 식단 관리를 위한 기초 정보를 알려주세요." />
         <Stack spacing={6} w="full">
           <FormControl>
@@ -116,19 +119,19 @@ export function UserInfoForm() {
             </FormControl>
           </HStack>
         </Stack>
-      </Main>
+      </MainContent>
       <BottomNavigation>
         <FilledButton>다음</FilledButton>
       </BottomNavigation>
-    </Layout>
+    </BaseLayout>
   );
 }
 
 export function HealthGoalSetting() {
   return (
-    <Layout>
+    <BaseLayout>
       <Header text="건강 목표 설정" hasPrev />
-      <Main>
+      <MainContent>
         <ChatBot message="식단 관리 계획을 생성하기 위해 저에게 건강 목표를 알려주세요." />
         <Stack spacing={6} w="full">
           <FormControl>
@@ -166,19 +169,19 @@ export function HealthGoalSetting() {
             </NumberInput>
           </FormControl>
         </Stack>
-      </Main>
+      </MainContent>
       <BottomNavigation>
         <FilledButton>다음</FilledButton>
       </BottomNavigation>
-    </Layout>
+    </BaseLayout>
   );
 }
 
 export function ActivityEstimation() {
   return (
-    <Layout>
+    <BaseLayout>
       <Header text="활동대사량 추정" hasPrev />
-      <Main>
+      <MainContent>
         <ChatBot message="식단 관리 계획을 생성하기 위해 일상생활 활동량 지수(Physical Activity Level, PAL)을 계산합니다. 홍길동님의 활동량 수준을 알려주세요." />
         <Stack spacing={6} w="full">
           <FormControl>
@@ -204,19 +207,19 @@ export function ActivityEstimation() {
             </VStack>
           </FormControl>
         </Stack>
-      </Main>
+      </MainContent>
       <BottomNavigation>
         <FilledButton>다음</FilledButton>
       </BottomNavigation>
-    </Layout>
+    </BaseLayout>
   );
 }
 
 export function RecommendedIntakeResult() {
   return (
-    <Layout>
+    <BaseLayout>
       <Header text="권장 섭취량 계산" hasPrev />
-      <Main>
+      <MainContent>
         <ChatBot
           message={[
             "홍길동님의 신체 정보, 건강 목표 및 활동량을 통해 에너지 섭취량과 영양소 섭취량을 계산합니다.",
@@ -228,10 +231,10 @@ export function RecommendedIntakeResult() {
             "첫 번째 식단을 기록하기 위해 홈 화면의 카메라 버튼을 터치해주세요.",
           ]}
         />
-      </Main>
+      </MainContent>
       <BottomNavigation>
         <FilledButton>다음</FilledButton>
       </BottomNavigation>
-    </Layout>
+    </BaseLayout>
   );
 }
