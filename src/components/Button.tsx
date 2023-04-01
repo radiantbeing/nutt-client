@@ -1,39 +1,60 @@
 import { Button, Heading, Text, Flex, VStack } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
-export function FilledButton(props: { children?: React.ReactNode }) {
-  return (
-    <Button
-      w="full"
-      size="lg"
-      fontWeight="medium"
-      bgColor="green.500"
-      color="white"
-      _hover={{
-        bgColor: "green.500",
-      }}
-      _active={{
-        bgColor: "green.600",
-      }}
-    >
-      {props.children}
-    </Button>
-  );
-}
+export function LinkButton({
+  children,
+  variant,
+  to,
+}: {
+  children: React.ReactNode;
+  variant?: "outline" | "solid";
+  to?: string | number;
+}) {
+  const navigate = useNavigate();
 
-export function OutlineButton(props: { children?: React.ReactNode }) {
-  return (
-    <Button
-      w="full"
-      size="lg"
-      fontWeight="medium"
-      bgColor="transparent"
-      color="green.500"
-      border="1px"
-      borderColor="green.500"
-    >
-      {props.children}
-    </Button>
-  );
+  const handleClick = () => {
+    if (typeof to === "number") {
+      navigate(to);
+    } else if (typeof to === "string") {
+      navigate(to.toString());
+    }
+  };
+
+  if (variant === "outline") {
+    return (
+      <Button
+        w="full"
+        size="lg"
+        fontWeight="medium"
+        bgColor="transparent"
+        color="green.500"
+        border="1px"
+        borderColor="green.500"
+        onClick={handleClick}
+      >
+        {children}
+      </Button>
+    );
+  } else {
+    return (
+      <Button
+        w="full"
+        size="lg"
+        fontWeight="medium"
+        bgColor="green.500"
+        color="white"
+        _hover={{
+          bgColor: "green.500",
+        }}
+        _active={{
+          bgColor: "green.600",
+        }}
+        onClick={handleClick}
+      >
+        {children}
+      </Button>
+    );
+  }
 }
 
 export function CardButton(props: {

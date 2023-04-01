@@ -8,7 +8,7 @@ const Fonts = () => (
         font-weight: 45 920;
         font-style: normal;
         font-display: swap;
-        src: local('Pretendard Variable'), url('./woff2/PretendardVariable.woff2') format('woff2-variations');
+        src: local('Pretendard Variable'), url('./woff2/PretendardVariable.woff2') format('font-woff2-variations');
       }
       `}
   />

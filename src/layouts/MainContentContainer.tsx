@@ -1,7 +1,9 @@
-import { Box, VStack } from "@chakra-ui/react";
+import { VStack } from "@chakra-ui/react";
 import { useState, useRef, useEffect } from "react";
 
-export function MainContent(props: { children: React.ReactNode }) {
+export default function MainContentContainer(props: {
+  children: React.ReactNode;
+}) {
   const [isScrolledToBottom, setIsScrolledToBottom] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -19,25 +21,21 @@ export function MainContent(props: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <Box
+    <VStack
       h="full"
+      spacing={4}
       onScroll={handleScroll}
       overflowY="auto"
       borderBottomWidth={isScrolledToBottom ? "none" : "1px"}
       borderColor="rgba(0, 0, 0, 0.08)"
       ref={ref}
+      paddingTop={4}
+      paddingBottom={4}
+      paddingLeft={4}
+      paddingRight={4}
+      alignItems="start"
     >
-      <VStack
-        h="full"
-        align="flex-start"
-        spacing={4}
-        paddingTop={6}
-        paddingBottom={6}
-        paddingLeft={4}
-        paddingRight={4}
-      >
-        {props.children}
-      </VStack>
-    </Box>
+      {props.children}
+    </VStack>
   );
 }

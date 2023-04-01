@@ -1,6 +1,6 @@
-import { Center, Circle, keyframes, Box, VStack } from "@chakra-ui/react";
+import { Center, Circle, keyframes, VStack, Flex } from "@chakra-ui/react";
 
-const ChatAvatar = () => {
+function ChatAvatar() {
   const breathe = keyframes`
       0% {
         box-shadow: 0 0 0 7px rgba(72, 187, 120, 0.6), 0 0 0 13px rgba(154, 230, 180, 0.5);
@@ -21,12 +21,18 @@ const ChatAvatar = () => {
       />
     </Center>
   );
+}
+
+type ChatBoxProps = {
+  message: string;
+  h?: number | string;
 };
 
-const ChatBox = (props: { message: string | string[] }) => {
+function ChatBox(props: ChatBoxProps) {
   return (
-    <Box
+    <Flex
       w="full"
+      h={props.h || "auto"}
       bgGradient="linear(to-r, #48BB78, #38A169)"
       borderRadius={8}
       padding={3}
@@ -36,20 +42,22 @@ const ChatBox = (props: { message: string | string[] }) => {
       whiteSpace="pre-wrap"
     >
       {props.message}
-    </Box>
+    </Flex>
   );
+}
+
+type ChatBotProps = {
+  message: string;
+  w?: number | string;
+  h?: number | string;
 };
 
-export const ChatBot = (props: { message: string | string[] }) => {
-  const { message } = props;
+export default function ChatBot(props: ChatBotProps) {
+  const { message, w, h } = props;
   return (
-    <VStack w="full" alignItems="flex-start">
+    <VStack w={w || "full"} alignItems="flex-start">
       <ChatAvatar />
-      {typeof message === "string" ? (
-        <ChatBox message={message} />
-      ) : (
-        message.map((m, i) => <ChatBox key={i} message={m} />)
-      )}
+      <ChatBox h={h || "auto"} message={message} />
     </VStack>
   );
-};
+}

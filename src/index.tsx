@@ -1,21 +1,65 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
-import App from "./App";
 import * as serviceWorkerRegistration from "./serviceWorkerRegistration";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider } from "@chakra-ui/react";
 import Fonts from "./fonts";
 import theme from "./theme";
-import "./index.css";
+import "./styles/index.css";
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  // Navigate,
+  Route,
+  RouterProvider,
+} from "react-router-dom";
+import Root from "./pages/Root";
+import ErrorPage from "./pages/ErrorPage";
+import Welcome from "./pages/Welcome";
+import Index from "./pages/Index";
+import SignUp from "./pages/SignUp";
+// import { useAuth } from "./hooks/useAuth";
+import SignIn from "./pages/SignIn";
+import UserInfoForm from "./pages/BasicInfoForm";
+import HealthGoalForm from "./pages/HealthGoalForm";
+import { ActivityEstimationForm } from "./pages/ActivityEstimationForm";
+import RecommendedIntake from "./pages/RecommendedIntake";
+import Home from "./pages/Home";
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+// function PrivateRoute({ element, ...rest }: { element: React.ReactElement }) {
+//   const { isAuthenticated } = useAuth();
+
+//   return (
+//     <Route
+//       {...rest}
+//       element={isAuthenticated ? element : <Navigate to="/login" />}
+//     />
+//   );
+// }
+
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
+      <Route errorElement={<ErrorPage />}>
+        <Route index element={<Index />} />
+        <Route path="welcome" element={<Welcome />} />
+        <Route path="join" element={<SignUp />} />
+        <Route path="join/userInfo" element={<UserInfoForm />} />
+        <Route path="join/healthGoal" element={<HealthGoalForm />} />
+        <Route path="join/activity" element={<ActivityEstimationForm />} />
+        <Route path="join/intake" element={<RecommendedIntake />} />
+        <Route path="home" element={<Home />} />
+        <Route path="login" element={<SignIn />} />
+      </Route>
+    </Route>
+  )
 );
 
-root.render(
+const root = document.getElementById("root") as HTMLElement;
+
+ReactDOM.createRoot(root).render(
   <ChakraProvider theme={theme}>
     <Fonts />
-    <App />
+    <RouterProvider router={router} />
   </ChakraProvider>
 );
 
