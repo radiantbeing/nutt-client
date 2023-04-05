@@ -9,7 +9,7 @@ type TemplateGridProps = {
 export default function TemplateGrid(props: TemplateGridProps) {
   return (
     <Container height="full">
-      <Grid height="full" templateRows="1fr 10fr 1fr">
+      <Grid height="full" templateRows="1fr 9.6fr 1.4fr">
         {/* Header */}
         <GridItem height="full">{props.header}</GridItem>
         {/* Main */}

@@ -1,4 +1,13 @@
-import { Center, Circle, keyframes, VStack, Flex } from "@chakra-ui/react";
+import {
+  Center,
+  Circle,
+  keyframes,
+  VStack,
+  Flex,
+  Spinner,
+} from "@chakra-ui/react";
+import { useEffect, useState } from "react";
+import { getMessage } from "../api/ChatGPT";
 
 function ChatAvatar() {
   const breathe = keyframes`
@@ -25,14 +34,13 @@ function ChatAvatar() {
 
 type ChatBoxProps = {
   message: string;
-  h?: number | string;
+  isLoading: boolean;
 };
 
 function ChatBox(props: ChatBoxProps) {
   return (
     <Flex
       w="full"
-      h={props.h || "auto"}
       bgGradient="linear(to-r, #48BB78, #38A169)"
       borderRadius={8}
       padding={3}
@@ -41,23 +49,44 @@ function ChatBox(props: ChatBoxProps) {
       lineHeight={6}
       whiteSpace="pre-wrap"
     >
-      {props.message}
+      {props.isLoading ? (
+        <Center width="full" padding={4}>
+          <Spinner />
+        </Center>
+      ) : (
+        props.message
+      )}
     </Flex>
   );
 }
 
 type ChatBotProps = {
-  message: string;
-  w?: number | string;
-  h?: number | string;
+  question?: string;
+  message?: string;
 };
 
 export default function ChatBot(props: ChatBotProps) {
-  const { message, w, h } = props;
+  const [message, setMessage] = useState<string>(props.message || "");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (props.question) {
+      setIsLoading(true);
+      getMessage(props.question).then((msg) => {
+        setIsLoading(false);
+        setMessage(msg);
+      });
+    }
+    return function cleanup() {
+      setIsLoading(false);
+      setMessage("");
+    };
+  }, [props.question]);
+
   return (
-    <VStack w={w || "full"} alignItems="flex-start">
+    <VStack w={"full"} alignItems="flex-start">
       <ChatAvatar />
-      <ChatBox h={h || "auto"} message={message} />
+      <ChatBox message={message} isLoading={isLoading} />
     </VStack>
   );
 }
