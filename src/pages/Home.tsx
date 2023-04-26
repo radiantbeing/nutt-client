@@ -25,6 +25,7 @@ import ChatBot from "../components/ChatBot";
 import Header from "../components/Header";
 import TemplateGrid from "../layouts/TemplateGrid";
 import sampleFood from "../assets/sample_food.jpg";
+import ArticleHeading from "../components/ArticleHeading";
 import { Link as RouterLink } from "react-router-dom";
 import { BsFire } from "react-icons/bs";
 import { BiBowlRice } from "react-icons/bi";
@@ -75,7 +76,7 @@ export default function Home() {
   const main = (
     <Stack spacing={4}>
       <ChatBot question="오늘 아침엔 샐러드를 먹었어. 영양학적 측면에서 평가해줘." />
-      <Text fontSize="lg">2023년 03월 23일</Text>
+      <ArticleHeading text="2023년 03월 23일" />
       <SimpleGrid w="full" padding={1} columns={2} spacing={4}>
         <NutrientCard
           icon={BsFire}

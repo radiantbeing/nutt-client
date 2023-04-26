@@ -24,6 +24,7 @@ import HealthGoalForm from "./pages/HealthGoalForm";
 import { ActivityEstimationForm } from "./pages/ActivityEstimationForm";
 import RecommendedIntake from "./pages/RecommendedIntake";
 import Home from "./pages/Home";
+import DietAnalysisPage from "./pages/DietAnalysisPage";
 
 // function PrivateRoute({ element, ...rest }: { element: React.ReactElement }) {
 //   const { isAuthenticated } = useAuth();
@@ -49,6 +50,7 @@ const router = createBrowserRouter(
         <Route path="join/intake" element={<RecommendedIntake />} />
         <Route path="home" element={<Home />} />
         <Route path="login" element={<SignIn />} />
+        <Route path="analysis" element={<DietAnalysisPage />} />
       </Route>
     </Route>
   )

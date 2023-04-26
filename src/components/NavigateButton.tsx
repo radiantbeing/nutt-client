@@ -16,6 +16,7 @@ export default function NavigateButton(props: NavigateButtonProps) {
         width="full"
         colorScheme="green"
         to={props.to}
+        fontWeight="medium"
         variant={props.variant || "solid"}
       >
         {props.children}
