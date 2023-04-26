@@ -75,6 +75,6 @@ export async function getMessage(message: string): Promise<string> {
     return response.data.choices[0].message.content;
   } catch (error) {
     console.error(error);
-    return "Something Wrong!";
+    return "ChatGPT API 호출에 실패했습니다.";
   }
 }
