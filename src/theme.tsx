@@ -6,32 +6,6 @@ const theme = extendTheme({
       baseStyle: {
         fontWeight: "semibold",
       },
-      // sizes: {
-      //   "2xl": {
-      //     fontSize: ["36px"],
-      //     lineHeight: ["46px"],
-      //   },
-      //   xl: {
-      //     fontSize: ["24px"],
-      //     lineHeight: ["34px"],
-      //   },
-      //   lg: {
-      //     fontSize: ["22px"],
-      //     lineHeight: ["32px"],
-      //   },
-      //   md: {
-      //     fontSize: ["18px"],
-      //     lineHeight: ["28px"],
-      //   },
-      //   sm: {
-      //     fontSize: ["16px"],
-      //     lineHeight: ["26px"],
-      //   },
-      //   xs: {
-      //     fontSize: ["14px"],
-      //     lineHeight: ["24px"],
-      //   },
-      // },
     },
   },
   colors: {
@@ -91,8 +65,8 @@ const theme = extendTheme({
     },
   },
   fonts: {
-    heading: `'Pretendard Variable', sans-serif`,
-    body: `'Pretendard Variable', sans-serif`,
+    heading: `Pretendard, sans-serif`,
+    body: `Pretendard, sans-serif`,
   },
 });
 
