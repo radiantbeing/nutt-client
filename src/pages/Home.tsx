@@ -20,6 +20,8 @@ import {
   LinkBox,
   Circle,
   Icon,
+  Box,
+  keyframes,
 } from "@chakra-ui/react";
 import ChatBot from "../components/ChatBot";
 import Header from "../components/Header";
@@ -34,6 +36,7 @@ import { GiJellyBeans } from "react-icons/gi";
 import { ImHome } from "react-icons/im";
 import { BsFillChatLeftTextFill } from "react-icons/bs";
 import { IconType } from "react-icons/lib/esm/iconBase";
+import { FC } from "react";
 
 type NutrientCardProps = {
   name: string;
@@ -47,28 +50,59 @@ type NutrientCardProps = {
 
 function NutrientCard(props: NutrientCardProps) {
   return (
-    <Card w="full" bgGradient={props.bgGradient} color={props.color}>
-      <CardBody>
-        <Stack spacing={3}>
-          <HStack>
-            <Icon
-              as={props.icon}
-              boxSize={5}
-              color={props.bgGradient ? "white" : "green.500"}
-            />
-            <Heading size="sm">{props.name}</Heading>
-          </HStack>
-          <Text as="span" fontWeight="semibold">
-            {props.value}
-            <Text as="span" fontWeight="normal">
-              {`/${props.maxValue}${props.unit}`}
-            </Text>
+    <Box
+      w="full"
+      bgGradient={props.bgGradient}
+      color={props.color}
+      paddingTop={4}
+      paddingBottom={4}
+      paddingStart={4}
+      paddingEnd={4}
+      borderRadius="md"
+      boxShadow="base"
+    >
+      <Stack spacing={3}>
+        <HStack>
+          <Icon
+            as={props.icon}
+            boxSize={5}
+            color={props.bgGradient ? "white" : "green.500"}
+          />
+          <Heading size="sm">{props.name}</Heading>
+        </HStack>
+        <Text as="span" fontWeight="semibold">
+          {props.value}
+          <Text as="span" fontWeight="normal">
+            {`/${props.maxValue}${props.unit}`}
           </Text>
-        </Stack>
-      </CardBody>
-    </Card>
+        </Text>
+      </Stack>
+    </Box>
   );
 }
+
+const RecordButton: FC = () => {
+  const breathe = keyframes`
+      0% {
+        box-shadow: 0 0 0 7px rgb(255, 212, 206);
+      }
+      50% {
+        box-shadow: 0 0 0 5px rgb(255, 212, 206)
+      }
+      100% {
+        box-shadow: 0 0 0 7px rgb(255, 212, 206);
+      }
+     `;
+  return (
+    <LinkBox as={RouterLink} to="/analysis">
+      <Circle
+        size="32px"
+        bg="#ff9386"
+        animation={`${breathe} 2s ease-in-out infinite`}
+      />
+    </LinkBox>
+  );
+};
 
 export default function Home() {
   const header = <Header>홍길동님</Header>;
@@ -180,7 +214,9 @@ export default function Home() {
       justify="space-around"
       borderTop="1px"
       borderColor="gray.100"
-      padding={5}
+      paddingTop={5}
+      paddingStart={5}
+      paddingEnd={5}
     >
       <LinkBox as={RouterLink} to="/info">
         <VStack>
@@ -190,11 +226,7 @@ export default function Home() {
           </Text>
         </VStack>
       </LinkBox>
-      <LinkBox as={RouterLink} to="/analysis">
-        <Circle size="48px" bg="#ffd4ce">
-          <Circle size="32px" bg="#ff9386"></Circle>
-        </Circle>
-      </LinkBox>
+      <RecordButton />
       <LinkBox as={RouterLink} to="/chat">
         <VStack color="gray.300">
           <Icon as={BsFillChatLeftTextFill} />
