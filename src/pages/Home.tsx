@@ -190,7 +190,7 @@ export default function Home() {
           </Text>
         </VStack>
       </LinkBox>
-      <LinkBox as={RouterLink} to="/photo">
+      <LinkBox as={RouterLink} to="/analysis">
         <Circle size="48px" bg="#ffd4ce">
           <Circle size="32px" bg="#ff9386"></Circle>
         </Circle>

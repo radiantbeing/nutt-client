@@ -25,6 +25,7 @@ import { ActivityEstimationForm } from "./pages/ActivityEstimationForm";
 import RecommendedIntake from "./pages/RecommendedIntake";
 import Home from "./pages/Home";
 import DietAnalysisPage from "./pages/DietAnalysisPage";
+import Chat from "./pages/Chat";
 
 // function PrivateRoute({ element, ...rest }: { element: React.ReactElement }) {
 //   const { isAuthenticated } = useAuth();
@@ -51,6 +52,7 @@ const router = createBrowserRouter(
         <Route path="home" element={<Home />} />
         <Route path="login" element={<SignIn />} />
         <Route path="analysis" element={<DietAnalysisPage />} />
+        <Route path="chat" element={<Chat />} />
       </Route>
     </Route>
   )
