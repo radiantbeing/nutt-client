@@ -10,7 +10,7 @@ export function ActivityEstimationForm() {
 
   const main = (
     <Stack spacing={6} w="full">
-      <ChatBot message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer maximus, ante id euismod auctor, massa velit congue ex, vel tempus orci metus id ipsum. Proin vel tristique ante, vel sollicitudin justo." />
+      <ChatBot message="식단 관리 계획을 생성하기 위해 일상생활 활동량 지수(Physical Activity Level, PAL)을 계산합니다. 홍길동님의 활동량 수준을 알려주세요." />
       <FormControl>
         <FormLabel>활동량 선택</FormLabel>
         <VStack>

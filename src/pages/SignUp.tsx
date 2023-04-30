@@ -18,7 +18,7 @@ export default function SignUp() {
 
   const main = (
     <Stack spacing={6}>
-      <ChatBot message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer maximus, ante id euismod auctor, massa velit congue ex, vel tempus orci metus id ipsum. Proin vel tristique ante, vel sollicitudin justo." />
+      <ChatBot message="반갑습니다! 저는 AI 식단 관리 도우미 ‘뉴트(Nutt)입니다. 앱의 모든 기능을 사용하기 위해 회원가입을 진행해주세요." />
       <FormControl>
         <FormLabel>이메일</FormLabel>
         <Input type="email" placeholder="nutt@example.com" />

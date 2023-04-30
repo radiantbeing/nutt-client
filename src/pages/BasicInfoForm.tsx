@@ -22,7 +22,7 @@ export default function UserInfoForm() {
 
   const main = (
     <Stack spacing={6}>
-      <ChatBot message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer maximus, ante id euismod auctor, massa velit congue ex, vel tempus orci metus id ipsum. Proin vel tristique ante, vel sollicitudin justo." />
+      <ChatBot message="이름, 성별, 그리고  신체 정보를 알려주세요." />
       <Stack spacing={6} w="full">
         <FormControl>
           <FormLabel>이름</FormLabel>

@@ -19,7 +19,7 @@ export default function RecommendedIntakeResult() {
 
   const main = (
     <Stack spacing={6} w="full">
-      <ChatBot message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer maximus, ante id euismod auctor, massa velit congue ex, vel tempus orci metus id ipsum. Proin vel tristique ante, vel sollicitudin justo." />
+      <ChatBot message="홍길동님의 신체 정보, 건강 목표 및 활동량을 통해 에너지 섭취량과 영양소 섭취량을 계산합니다." />
       <SimpleGrid columns={2} spacing={6}>
         <FormControl>
           <FormLabel>섭취 칼로리 (kcal)</FormLabel>

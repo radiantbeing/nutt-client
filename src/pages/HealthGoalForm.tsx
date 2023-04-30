@@ -20,7 +20,7 @@ export default function HealthGoalForm() {
 
   const main = (
     <Stack spacing={6} w="full">
-      <ChatBot message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer maximus, ante id euismod auctor, massa velit congue ex, vel tempus orci metus id ipsum. Proin vel tristique ante, vel sollicitudin justo." />
+      <ChatBot message="식단 관리 계획을 생성하기 위해 저에게 건강 목표를 알려주세요." />
       <FormControl>
         <FormLabel>건강 목표 선택</FormLabel>
         <VStack>
