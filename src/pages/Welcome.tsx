@@ -1,32 +1,38 @@
-import { Center, VStack, HStack, Heading, Image } from "@chakra-ui/react";
+import { Center, VStack, HStack, Heading, Image, Box } from "@chakra-ui/react";
 import Header from "../components/Header";
 import TemplateGrid from "../layouts/TemplateGrid";
 import NavigateButton from "../components/NavigateButton";
 import logo from "../assets/logo.svg";
+import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
-  const header = <Header>환영합니다</Header>;
+  const navigate = useNavigate();
+
+  const header = <Header isWelcome>환영합니다</Header>;
 
   const main = (
-    <Center boxSize="full">
-      <VStack align="flex-start" spacing={4}>
-        <Heading
-          size="sm"
-          bgGradient="linear(to-r, #25855A, #48BB78)"
-          bgClip="text"
-          fontWeight="bold"
-        >
-          처음 만나는 AI 식단 관리
-        </Heading>
-        <HStack spacing={6}>
-          <Image src={logo} boxSize={24} />
-          <Heading size="2xl">Nutt</Heading>
-        </HStack>
-      </VStack>
-    </Center>
+    <Box boxSize="full">
+      <Center boxSize="full">
+        <VStack align="flex-start" spacing={4}>
+          <Heading size="sm" fontWeight="bold" color="white">
+            처음 만나는 AI 식단 관리
+          </Heading>
+          <HStack spacing={6}>
+            <Image src={logo} boxSize={24} />
+            <Heading size="2xl" color="white">
+              Nutt
+            </Heading>
+          </HStack>
+        </VStack>
+      </Center>
+    </Box>
   );
 
-  const footer = <NavigateButton to="/join">시작하기</NavigateButton>;
+  const footer = (
+    <NavigateButton onClick={() => navigate("/SignUp")}>
+      시작하기
+    </NavigateButton>
+  );
 
-  return <TemplateGrid header={header} main={main} footer={footer} />;
+  return <TemplateGrid header={header} main={main} footer={footer} isWelcome />;
 }

@@ -1,20 +1,21 @@
 import { ChevronLeftIcon } from "@chakra-ui/icons";
 import { IconButton } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
+import { FC } from "react";
 
-export default function PreviousButton() {
-  const navigate = useNavigate();
+type PreviousButtonProps = {
+  onClick?: () => void;
+};
 
-  function handleClick() {
-    navigate(-1);
-  }
-
+const PreviousButton: FC<PreviousButtonProps> = ({ onClick }) => {
+  if (!onClick) return null;
   return (
     <IconButton
       aria-label="Go to previous page."
       icon={<ChevronLeftIcon />}
       backgroundColor="transparent"
-      onClick={handleClick}
+      onClick={onClick}
     />
   );
-}
+};
+
+export default PreviousButton;

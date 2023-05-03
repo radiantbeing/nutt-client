@@ -1,26 +1,31 @@
 import { Flex, Button } from "@chakra-ui/react";
-import { Link as RouterLink } from "react-router-dom";
+import { FC } from "react";
 
 type NavigateButtonProps = {
   children: React.ReactNode;
-  to: string;
   variant?: "solid" | "outline" | "ghost" | "link";
+  onClick: () => void;
 };
 
-export default function NavigateButton(props: NavigateButtonProps) {
+const NavigateButton: FC<NavigateButtonProps> = ({
+  children,
+  variant,
+  onClick,
+}) => {
   return (
     <Flex paddingBottom={8} boxSize="full" align="center">
       <Button
-        as={RouterLink}
         size="lg"
         width="full"
         colorScheme="green"
-        to={props.to}
         fontWeight="medium"
-        variant={props.variant || "solid"}
+        variant={variant || "solid"}
+        onClick={onClick}
       >
-        {props.children}
+        {children}
       </Button>
     </Flex>
   );
-}
+};
+
+export default NavigateButton;

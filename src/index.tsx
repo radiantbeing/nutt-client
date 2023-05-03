@@ -8,21 +8,14 @@ import "./styles/index.css";
 import {
   createBrowserRouter,
   createRoutesFromElements,
-  // Navigate,
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Root from "./pages/Root";
 import ErrorPage from "./pages/ErrorPage";
 import Welcome from "./pages/Welcome";
-import Index from "./pages/Index";
-import SignUp from "./pages/SignUp";
-// import { useAuth } from "./hooks/useAuth";
-import SignIn from "./pages/SignIn";
-import UserInfoForm from "./pages/BasicInfoForm";
-import HealthGoalForm from "./pages/HealthGoalForm";
-import { ActivityEstimationForm } from "./pages/ActivityEstimationForm";
-import RecommendedIntake from "./pages/RecommendedIntake";
+import SignUp from "./pages/SignUp/SignUp";
+import SignIn from "./pages/SignIn/SignIn";
+
 import Home from "./pages/Home";
 import DietAnalysisPage from "./pages/DietAnalysisPage";
 import Chat from "./pages/Chat";
@@ -40,20 +33,14 @@ import Chat from "./pages/Chat";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path="/" element={<Root />} errorElement={<ErrorPage />}>
-      <Route errorElement={<ErrorPage />}>
-        <Route index element={<Index />} />
-        <Route path="welcome" element={<Welcome />} />
-        <Route path="join" element={<SignUp />} />
-        <Route path="join/userInfo" element={<UserInfoForm />} />
-        <Route path="join/healthGoal" element={<HealthGoalForm />} />
-        <Route path="join/activity" element={<ActivityEstimationForm />} />
-        <Route path="join/intake" element={<RecommendedIntake />} />
-        <Route path="home" element={<Home />} />
-        <Route path="login" element={<SignIn />} />
-        <Route path="analysis" element={<DietAnalysisPage />} />
-        <Route path="chat" element={<Chat />} />
-      </Route>
+    <Route errorElement={<ErrorPage />}>
+      <Route index element={<Welcome />} />
+      <Route path="Welcome" element={<Welcome />} />
+      <Route path="SignUp" element={<SignUp />} />
+      <Route path="home" element={<Home />} />
+      <Route path="SignIn" element={<SignIn />} />
+      <Route path="analysis" element={<DietAnalysisPage />} />
+      <Route path="chat" element={<Chat />} />
     </Route>
   )
 );

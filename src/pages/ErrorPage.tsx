@@ -1,5 +1,5 @@
 import { Center, Heading, Text, VStack } from "@chakra-ui/react";
-import { useRouteError } from "react-router-dom";
+import { useNavigate, useRouteError } from "react-router-dom";
 import Header from "../components/Header";
 import NavigateButton from "../components/NavigateButton";
 import TemplateGrid from "../layouts/TemplateGrid";
@@ -20,6 +20,8 @@ function isRouteError(error: any): error is RouteError {
 }
 
 export default function ErrorPage() {
+  const navigate = useNavigate();
+
   const error = useRouteError();
   console.error(error);
 
@@ -38,7 +40,7 @@ export default function ErrorPage() {
   );
 
   const footer = (
-    <NavigateButton to="/join/userInfo">이전 페이지로</NavigateButton>
+    <NavigateButton onClick={() => navigate("/")}>메인 페이지로</NavigateButton>
   );
   return <TemplateGrid header={header} main={main} footer={footer} />;
 }

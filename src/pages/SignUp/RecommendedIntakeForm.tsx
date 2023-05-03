@@ -9,13 +9,22 @@ import {
   Stack,
   SimpleGrid,
 } from "@chakra-ui/react";
-import ChatBot from "../components/ChatBot";
-import Header from "../components/Header";
-import NavigateButton from "../components/NavigateButton";
-import TemplateGrid from "../layouts/TemplateGrid";
+import { FC } from "react";
+import ChatBot from "../../components/ChatBot";
+import Header from "../../components/Header";
+import NavigateButton from "../../components/NavigateButton";
+import TemplateGrid from "../../layouts/TemplateGrid";
 
-export default function RecommendedIntakeResult() {
-  const header = <Header>권장 섭취량 설정</Header>;
+type RecommendedIntakeFormProps = {
+  onPrevClick: () => void;
+  onNextClick: () => void;
+};
+
+const RecommendedIntakeForm: FC<RecommendedIntakeFormProps> = ({
+  onPrevClick,
+  onNextClick,
+}) => {
+  const header = <Header onPrevClick={onPrevClick}>권장 섭취량 설정</Header>;
 
   const main = (
     <Stack spacing={6} w="full">
@@ -65,7 +74,11 @@ export default function RecommendedIntakeResult() {
     </Stack>
   );
 
-  const footer = <NavigateButton to="/home">시작하기</NavigateButton>;
+  const footer = (
+    <NavigateButton onClick={onNextClick}>시작하기</NavigateButton>
+  );
 
   return <TemplateGrid header={header} main={main} footer={footer} />;
-}
+};
+
+export default RecommendedIntakeForm;

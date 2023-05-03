@@ -6,17 +6,22 @@ import {
   Stack,
   Link,
 } from "@chakra-ui/react";
-import Header from "../components/Header";
-import ChatBot from "../components/ChatBot";
-import NavigateButton from "../components/NavigateButton";
-import TemplateGrid from "../layouts/TemplateGrid";
+import Header from "../../components/Header";
+import ChatBot from "../../components/ChatBot";
+import NavigateButton from "../../components/NavigateButton";
+import TemplateGrid from "../../layouts/TemplateGrid";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
-  const header = <Header>로그인</Header>;
+  const navigate = useNavigate();
+
+  const header = (
+    <Header onPrevClick={() => navigate("/SignUp")}>로그인</Header>
+  );
 
   const main = (
     <Stack spacing={6} w="full">
-      <ChatBot message="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer maximus, ante id euismod auctor, massa velit congue ex, vel tempus orci metus id ipsum. Proin vel tristique ante, vel sollicitudin justo." />
+      <ChatBot message="이미 계정을 가지고 있나요? 이메일과 비밀번호로 로그인하세요." />
       <FormControl>
         <FormLabel>이메일</FormLabel>
         <Input type="email" placeholder="nutt@example.com" />
@@ -38,7 +43,7 @@ export default function SignIn() {
     </Stack>
   );
 
-  const footer = <NavigateButton to="/login">로그인</NavigateButton>;
+  const footer = <NavigateButton onClick={() => {}}>로그인</NavigateButton>;
 
   return <TemplateGrid header={header} main={main} footer={footer} />;
 }

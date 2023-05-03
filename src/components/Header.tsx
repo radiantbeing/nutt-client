@@ -1,19 +1,35 @@
 import { Flex, HStack, Heading } from "@chakra-ui/react";
 import PreviousButton from "./PreviousButton";
-import SettingsButton from "./SettingsButton";
+import MoreMenuButton from "./MoreMenuButton";
+import { FC } from "react";
 
 type HeaderProps = {
+  onPrevClick?: () => void;
+  isMoreMenuVisible?: boolean;
+  isWelcome?: boolean;
   children: React.ReactNode;
 };
 
-export default function Header(props: HeaderProps) {
+const Header: FC<HeaderProps> = ({
+  isMoreMenuVisible,
+  isWelcome,
+  children,
+  onPrevClick,
+}) => {
   return (
-    <Flex boxSize="full" align="center" justify="space-between">
+    <Flex
+      boxSize="full"
+      align="center"
+      justify="space-between"
+      color={isWelcome ? "white" : undefined}
+    >
       <HStack>
-        <PreviousButton />
-        <Heading size="md">{props.children}</Heading>
+        <PreviousButton onClick={onPrevClick} />
+        <Heading size="md">{children}</Heading>
       </HStack>
-      <SettingsButton />
+      <MoreMenuButton isMoreMenuVisible={isMoreMenuVisible} />
     </Flex>
   );
-}
+};
+
+export default Header;

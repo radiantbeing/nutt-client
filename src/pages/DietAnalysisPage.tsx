@@ -130,10 +130,10 @@ export default function DietAnalysisPage() {
 
   const footer = (
     <HStack boxSize="full">
-      <NavigateButton to="/home" variant="outline">
+      <NavigateButton onClick={() => {}} variant="outline">
         재촬영
       </NavigateButton>
-      <NavigateButton to="/home">기록하기</NavigateButton>
+      <NavigateButton onClick={() => {}}>기록하기</NavigateButton>
     </HStack>
   );
 

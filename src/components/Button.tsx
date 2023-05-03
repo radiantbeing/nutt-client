@@ -62,6 +62,7 @@ export function CardButton(props: {
   description: string;
   src?: string;
   isActive?: boolean;
+  onClick: () => void;
 }) {
   return (
     <Flex
@@ -82,6 +83,7 @@ export function CardButton(props: {
       _active={{
         bgColor: "gray.100",
       }}
+      onClick={() => props.onClick()}
     >
       <VStack alignItems="flex-start" textAlign="start">
         <Heading fontSize="sm">{props.heading}</Heading>
