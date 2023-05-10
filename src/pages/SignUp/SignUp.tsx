@@ -1,11 +1,15 @@
 import { useToast } from "@chakra-ui/react";
+import axios, { AxiosResponse } from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { JWTTokens } from "../../interfaces/JWT";
 import AccountForm from "./AccountForm";
 import ActivityLevelForm from "./ActivityLevelForm";
 import BasicInfoForm from "./BasicInfoForm";
 import HealthGoalForm from "./HealthGoalForm";
 import RecommendedIntakeForm from "./RecommendedIntakeForm";
+
+const API_URL = process.env.REACT_APP_NUTT_API_URL;
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -21,8 +25,8 @@ export default function SignUp() {
   >("회원가입");
 
   // 회원 정보
-  const [id, setId] = useState<string>("");
-  const [isIdValid, setIsIdValid] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>("");
+  const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [isPasswordValid, setIsPasswordValid] = useState<boolean>(false);
   const [name, setName] = useState<string>("");
@@ -41,11 +45,11 @@ export default function SignUp() {
   const [dailyFat, setDailyFat] = useState<number>(0);
 
   // 이벤트 리스너
-  const onIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const inputId = e.target.value;
+  const onEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const inputEmail = e.target.value;
     const pattern = /^[a-zA-Z0-9+-\\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
-    setId(inputId);
-    setIsIdValid(pattern.test(inputId));
+    setEmail(inputEmail);
+    setIsEmailValid(pattern.test(inputEmail));
   };
   const onPasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const pwd = e.target.value;
@@ -73,16 +77,16 @@ export default function SignUp() {
     case "회원가입":
       return (
         <AccountForm
-          id={id}
+          email={email}
           password={password}
-          isIdValid={isIdValid}
+          isEmailValid={isEmailValid}
           isPasswordValid={isPasswordValid}
-          onIdChange={onIdChange}
+          onEmailChange={onEmailChange}
           onPasswordChange={onPasswordChange}
           onPrevClick={() => navigate("/")}
           onNextClick={() => {
             // TODO: 테스트 후 주석 해제
-            // if (isIdValid && isPasswordValid) {
+            // if (isEmailValid && isPasswordValid) {
             setStage("기초정보수집");
             // } else {
             //   toast({
@@ -152,7 +156,54 @@ export default function SignUp() {
       return (
         <RecommendedIntakeForm
           onPrevClick={() => setStage("활동량추정")}
-          onNextClick={() => navigate("/")}
+          onNextClick={async () => {
+            const userProfile = {
+              password,
+              email,
+              name,
+              gender,
+              age,
+              height,
+              weight,
+              target,
+              weightGainRate,
+              pal,
+              dailyKcal,
+              dailyCarbohydrate,
+              dailyProtein,
+              dailyFat,
+            };
+            try {
+              // 회원가입 요청
+              await axios.post(`${API_URL}/api/signUp`, userProfile);
+
+              // 회원가입 성공 시 즉시 로그인
+              const loginResponse: AxiosResponse = await axios.post(
+                `${API_URL}/api/login`,
+                {
+                  email,
+                  password,
+                }
+              );
+
+              const { accessToken }: JWTTokens = loginResponse.data;
+              localStorage.setItem("accessToken", accessToken);
+              navigate("/");
+            } catch (error) {
+              const toastId = "signup-error-toast";
+              if (!toast.isActive(toastId)) {
+                toast({
+                  id: toastId,
+                  position: "top",
+                  title: "회원가입 실패",
+                  description: "회원가입에 실패했습니다. 다시 시도해주세요.",
+                  status: "error",
+                  duration: 3000,
+                  isClosable: true,
+                });
+              }
+            }
+          }}
         />
       );
   }

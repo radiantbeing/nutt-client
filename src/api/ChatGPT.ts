@@ -71,7 +71,6 @@ export async function getMessage(message: string): Promise<string> {
   };
   try {
     const response: ChatGPTResponse = await axios(requestInfo);
-    console.log(response);
     return response.data.choices[0].message.content;
   } catch (error) {
     console.error(error);

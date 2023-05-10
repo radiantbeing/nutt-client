@@ -12,33 +12,20 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
-import Welcome from "./pages/Welcome/Welcome";
 import SignUp from "./pages/SignUp/SignUp";
 import SignIn from "./pages/SignIn/SignIn";
 
-import Home from "./pages/Home/Home";
 import DietAnalysisPage from "./pages/Analysis/DietAnalysisPage";
 import Chat from "./pages/Chat/Chat";
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
-
-// function PrivateRoute({ element, ...rest }: { element: React.ReactElement }) {
-//   const { isAuthenticated } = useAuth();
-
-//   return (
-//     <Route
-//       {...rest}
-//       element={isAuthenticated ? element : <Navigate to="/login" />}
-//     />
-//   );
-// }
+import Index from "./pages/Index";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route errorElement={<ErrorPage />}>
-      <Route index element={<Welcome />} />
+      <Route index element={<Index />} />
       <Route path="signup" element={<SignUp />} />
-      <Route path="home" element={<Home />} />
       <Route path="login" element={<SignIn />} />
       <Route path="analysis" element={<DietAnalysisPage />} />
       <Route path="chat" element={<Chat />} />

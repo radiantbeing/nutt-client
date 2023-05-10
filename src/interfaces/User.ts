@@ -16,6 +16,6 @@ export interface HealthGoal {
 }
 
 export interface UserProfile extends BodyInformation, HealthGoal {
-  id: string;
+  email: string;
   name: string;
 }

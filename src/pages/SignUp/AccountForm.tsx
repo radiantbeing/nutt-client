@@ -19,24 +19,24 @@ import { useNavigate } from "react-router-dom";
 import { FC, useState } from "react";
 
 type SignUpProps = {
-  id: string;
+  email: string;
   password: string;
-  isIdValid: boolean;
+  isEmailValid: boolean;
   isPasswordValid: boolean;
   onPrevClick: () => void;
   onNextClick: () => void;
-  onIdChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onEmailChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onPasswordChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const SignUp: FC<SignUpProps> = ({
-  id,
+  email,
   password,
-  isIdValid,
+  isEmailValid,
   isPasswordValid,
   onPrevClick,
   onNextClick,
-  onIdChange,
+  onEmailChange,
   onPasswordChange,
 }) => {
   const navigate = useNavigate();
@@ -49,17 +49,17 @@ const SignUp: FC<SignUpProps> = ({
   const main = (
     <Stack spacing={6}>
       <ChatBot message="반갑습니다! 저는 AI 식단 관리 도우미 ‘뉴트(Nutt)입니다. 앱의 모든 기능을 사용하기 위해 회원가입을 진행해주세요." />
-      <FormControl isInvalid={id === "" ? false : !isIdValid}>
+      <FormControl isInvalid={email === "" ? false : !isEmailValid}>
         <FormLabel>이메일</FormLabel>
         <Input
           type="email"
           placeholder="nutt@example.com"
-          value={id}
-          onChange={onIdChange}
+          value={email}
+          onChange={onEmailChange}
         />
-        {id === "" ? (
+        {email === "" ? (
           <FormHelperText>이메일을 입력하세요</FormHelperText>
-        ) : isIdValid ? (
+        ) : isEmailValid ? (
           <FormHelperText>유효한 이메일입니다</FormHelperText>
         ) : (
           <FormErrorMessage>
