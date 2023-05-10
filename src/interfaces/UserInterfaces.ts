@@ -1,14 +1,14 @@
 export interface BodyInformation {
-  gender: string;
+  gender: "MALE" | "FEMALE";
   age: number;
   height: number;
   weight: number;
 }
 
 export interface HealthGoal {
-  target: string;
+  target: "loss" | "maintenance" | "increase";
   weightGainRate: number;
-  pal: number;
+  pal: 1.2 | 1.375 | 1.55 | 1.725;
   dailyKcal: number;
   dailyCarbohydrate: number;
   dailyProtein: number;
@@ -16,6 +16,6 @@ export interface HealthGoal {
 }
 
 export interface UserProfile extends BodyInformation, HealthGoal {
-  id: number;
+  id: string;
   name: string;
 }
