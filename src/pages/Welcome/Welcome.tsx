@@ -8,14 +8,14 @@ import { useNavigate } from "react-router-dom";
 export default function Welcome() {
   const navigate = useNavigate();
 
-  const header = <Header isWelcome>환영합니다</Header>;
+  const header = <Header color="white">반갑습니다.</Header>;
 
   const main = (
     <Box boxSize="full">
       <Center boxSize="full">
         <VStack align="flex-start" spacing={4}>
           <Heading size="sm" fontWeight="bold" color="white">
-            처음 만나는 AI 식단 관리
+            스마트한 AI 식단 관리
           </Heading>
           <HStack spacing={6}>
             <Image src={logo} boxSize={24} />
