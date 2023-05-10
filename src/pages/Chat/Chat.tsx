@@ -7,9 +7,9 @@ import {
   IconButton,
 } from "@chakra-ui/react";
 import { FC } from "react";
-import Header from "../components/Header";
-import NavigateButton from "../components/NavigateButton";
-import TemplateGrid from "../layouts/TemplateGrid";
+import Header from "../../components/Header";
+import NavigateButton from "../../components/NavigateButton";
+import TemplateGrid from "../../layouts/TemplateGrid";
 import { AiOutlineSend } from "react-icons/ai";
 
 type MessageProps = {

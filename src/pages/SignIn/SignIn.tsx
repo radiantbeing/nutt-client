@@ -16,7 +16,7 @@ export default function SignIn() {
   const navigate = useNavigate();
 
   const header = (
-    <Header onPrevClick={() => navigate("/SignUp")}>로그인</Header>
+    <Header onPrevClick={() => navigate("/signup")}>로그인</Header>
   );
 
   const main = (
@@ -43,7 +43,15 @@ export default function SignIn() {
     </Stack>
   );
 
-  const footer = <NavigateButton onClick={() => {}}>로그인</NavigateButton>;
+  const footer = (
+    <NavigateButton
+      onClick={() => {
+        // TODO: 로그인 로직 구현
+      }}
+    >
+      로그인
+    </NavigateButton>
+  );
 
   return <TemplateGrid header={header} main={main} footer={footer} />;
 }

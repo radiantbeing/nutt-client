@@ -15,11 +15,11 @@ import {
   Text,
   Flex,
 } from "@chakra-ui/react";
-import Header from "../components/Header";
-import ChatBot from "../components/ChatBot";
-import NavigateButton from "../components/NavigateButton";
-import TemplateGrid from "../layouts/TemplateGrid";
-import ArticleHeading from "../components/ArticleHeading";
+import Header from "../../components/Header";
+import ChatBot from "../../components/ChatBot";
+import NavigateButton from "../../components/NavigateButton";
+import TemplateGrid from "../../layouts/TemplateGrid";
+import ArticleHeading from "../../components/ArticleHeading";
 
 export default function DietAnalysisPage() {
   const header = <Header>식단 분석 결과</Header>;

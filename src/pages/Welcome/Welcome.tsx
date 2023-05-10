@@ -1,8 +1,8 @@
 import { Center, VStack, HStack, Heading, Image, Box } from "@chakra-ui/react";
-import Header from "../components/Header";
-import TemplateGrid from "../layouts/TemplateGrid";
-import NavigateButton from "../components/NavigateButton";
-import logo from "../assets/logo.svg";
+import Header from "../../components/Header";
+import TemplateGrid from "../../layouts/TemplateGrid";
+import NavigateButton from "../../components/NavigateButton";
+import logo from "../../assets/logo.svg";
 import { useNavigate } from "react-router-dom";
 
 export default function Welcome() {
@@ -29,7 +29,7 @@ export default function Welcome() {
   );
 
   const footer = (
-    <NavigateButton onClick={() => navigate("/SignUp")}>
+    <NavigateButton onClick={() => navigate("/signup")}>
       시작하기
     </NavigateButton>
   );

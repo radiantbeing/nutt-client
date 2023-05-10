@@ -23,11 +23,11 @@ import {
   Box,
   keyframes,
 } from "@chakra-ui/react";
-import ChatBot from "../components/ChatBot";
-import Header from "../components/Header";
-import TemplateGrid from "../layouts/TemplateGrid";
-import sampleFood from "../assets/sample_food.jpg";
-import ArticleHeading from "../components/ArticleHeading";
+import ChatBot from "../../components/ChatBot";
+import Header from "../../components/Header";
+import TemplateGrid from "../../layouts/TemplateGrid";
+import sampleFood from "../../assets/sample_food.jpg";
+import ArticleHeading from "../../components/ArticleHeading";
 import { Link as RouterLink } from "react-router-dom";
 import { BsFire } from "react-icons/bs";
 import { BiBowlRice } from "react-icons/bi";

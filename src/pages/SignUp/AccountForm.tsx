@@ -104,7 +104,7 @@ const SignUp: FC<SignUpProps> = ({
 
   const footer = (
     <HStack boxSize="full">
-      <NavigateButton onClick={() => navigate("/SignIn")} variant="outline">
+      <NavigateButton onClick={() => navigate("/login")} variant="outline">
         로그인
       </NavigateButton>
       <NavigateButton onClick={onNextClick}>회원가입</NavigateButton>
