@@ -19,6 +19,8 @@ import SignIn from "./pages/SignIn/SignIn";
 import Home from "./pages/Home/Home";
 import DietAnalysisPage from "./pages/Analysis/DietAnalysisPage";
 import Chat from "./pages/Chat/Chat";
+import { Provider } from "react-redux";
+import configureStore from "./store/configureStore";
 
 // function PrivateRoute({ element, ...rest }: { element: React.ReactElement }) {
 //   const { isAuthenticated } = useAuth();
@@ -47,10 +49,12 @@ const router = createBrowserRouter(
 const root = document.getElementById("root") as HTMLElement;
 
 ReactDOM.createRoot(root).render(
-  <ChakraProvider theme={theme}>
-    <Fonts />
-    <RouterProvider router={router} />
-  </ChakraProvider>
+  <Provider store={configureStore()}>
+    <ChakraProvider theme={theme}>
+      <Fonts />
+      <RouterProvider router={router} />
+    </ChakraProvider>
+  </Provider>
 );
 
 // If you want your app to work offline and load faster, you can change
