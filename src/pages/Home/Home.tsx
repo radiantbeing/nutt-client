@@ -18,10 +18,16 @@ import {
   AspectRatio,
   VStack,
   LinkBox,
-  Circle,
   Icon,
   Box,
   keyframes,
+  Button,
+  Popover,
+  PopoverTrigger,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverBody,
 } from "@chakra-ui/react";
 import ChatBot from "../../components/ChatBot";
 import Header from "../../components/Header";
@@ -31,10 +37,11 @@ import ArticleHeading from "../../components/ArticleHeading";
 import { Link as RouterLink } from "react-router-dom";
 import { BsFire } from "react-icons/bs";
 import { BiBowlRice } from "react-icons/bi";
-import { TbMeat } from "react-icons/tb";
+import { TbMeat, TbPhotoSensor2 } from "react-icons/tb";
 import { GiJellyBeans } from "react-icons/gi";
 import { ImHome } from "react-icons/im";
 import { BsFillChatLeftTextFill } from "react-icons/bs";
+import { MdOutlinePhotoCamera } from "react-icons/md";
 import { IconType } from "react-icons/lib/esm/iconBase";
 import { FC } from "react";
 
@@ -94,13 +101,60 @@ const RecordButton: FC = () => {
       }
      `;
   return (
-    <LinkBox as={RouterLink} to="/analysis">
-      <Circle
-        size="32px"
-        bg="#ff9386"
-        animation={`${breathe} 2s ease-in-out infinite`}
-      />
-    </LinkBox>
+    <Popover>
+      <PopoverTrigger>
+        <Button
+          boxSize="32px"
+          minWidth={0}
+          borderRadius="full"
+          bg="#ff9386"
+          animation={`${breathe} 2s ease-in-out infinite`}
+          _hover={{ background: "#ff9386" }}
+          _active={{ background: "#f77a6a" }}
+        />
+      </PopoverTrigger>
+      <PopoverContent width={200}>
+        <PopoverArrow />
+        <PopoverHeader>
+          <Text as="b">촬영 모드</Text>
+        </PopoverHeader>
+        <PopoverBody padding={0}>
+          <VStack>
+            <LinkBox
+              width="full"
+              padding={4}
+              display="flex"
+              gap={3}
+              alignItems="center"
+              as={RouterLink}
+              to="/realtime-recognition"
+              _hover={{ backgroundColor: "gray.100" }}
+              _active={{ backgroundColor: "gray.200" }}
+              justifyContent="center"
+              fontWeight="medium"
+            >
+              <Icon as={TbPhotoSensor2} boxSize={6} color="green.500" />
+              <Text display="inline">실시간 인식 모드</Text>
+            </LinkBox>
+            <LinkBox
+              width="full"
+              padding={4}
+              display="flex"
+              gap={3}
+              alignItems="center"
+              as={RouterLink}
+              to="/photo-recognition"
+              _hover={{ backgroundColor: "gray.200" }}
+              justifyContent="center"
+              fontWeight="medium"
+            >
+              <Icon as={MdOutlinePhotoCamera} boxSize={6} color="green.500" />
+              <Text display="inline">사진 인식 모드</Text>
+            </LinkBox>
+          </VStack>
+        </PopoverBody>
+      </PopoverContent>
+    </Popover>
   );
 };
 
