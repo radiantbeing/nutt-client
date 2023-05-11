@@ -17,11 +17,9 @@ import {
   PopoverContent,
   PopoverHeader,
   PopoverTrigger,
-  Grid,
 } from "@chakra-ui/react";
 import { FC } from "react";
 import Header from "../../components/Header";
-import NavigateButton from "../../components/NavigateButton";
 import TemplateGrid from "../../layouts/TemplateGrid";
 import { AiOutlineSend } from "react-icons/ai";
 import { BsFillChatLeftTextFill } from "react-icons/bs";
@@ -29,6 +27,7 @@ import { ImHome } from "react-icons/im";
 import { Link as RouterLink, useNavigate } from "react-router-dom";
 import { MdOutlinePhotoCamera } from "react-icons/md";
 import { TbPhotoSensor2 } from "react-icons/tb";
+import NavigationBar from "../../components/NavigationBar";
 
 const RecordButton: FC = () => {
   const breathe = keyframes`
@@ -139,7 +138,7 @@ const Chat: FC = () => {
       </Stack>
       <FormControl paddingTop={3}>
         <HStack spacing={2}>
-          <Input placeholder="메세지를 입력하세요" />
+          <Input placeholder="메세지를 입력하세요" autoComplete="off" />
           <IconButton
             colorScheme="green"
             aria-label="Send Message"
@@ -150,34 +149,7 @@ const Chat: FC = () => {
     </Flex>
   );
 
-  const footer = (
-    <HStack
-      justify="space-around"
-      borderTop="1px"
-      borderColor="gray.100"
-      paddingTop={5}
-      paddingStart={5}
-      paddingEnd={5}
-    >
-      <LinkBox as={RouterLink} to="/info">
-        <VStack color="gray.300">
-          <Icon as={ImHome} />
-          <Text fontSize="sm" fontWeight="semibold">
-            정보
-          </Text>
-        </VStack>
-      </LinkBox>
-      <RecordButton />
-      <LinkBox as={RouterLink} to="/chat">
-        <VStack>
-          <Icon as={BsFillChatLeftTextFill} />
-          <Text fontSize="sm" fontWeight="semibold">
-            채팅
-          </Text>
-        </VStack>
-      </LinkBox>
-    </HStack>
-  );
+  const footer = <NavigationBar />;
 
   return <TemplateGrid header={header} main={main} footer={footer} />;
 };
