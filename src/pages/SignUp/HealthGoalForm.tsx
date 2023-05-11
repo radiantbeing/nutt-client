@@ -8,6 +8,7 @@ import {
   NumberInputStepper,
   NumberIncrementStepper,
   NumberDecrementStepper,
+  FormHelperText,
 } from "@chakra-ui/react";
 import { FC } from "react";
 import { CardButton } from "../../components/Button";
@@ -45,39 +46,57 @@ const HealthGoalForm: FC<HealthGoalFormProps> = ({
             isActive={target === "loss"}
             heading="체중 감량"
             description="지방 감량으로 건강한 몸무게 유지"
-            onClick={() => onTargetChange("loss")}
+            onClick={() => {
+              onTargetChange("loss");
+              onWeightGainRateChange("0.1", 0.1);
+            }}
           />
           <CardButton
             isActive={target === "maintenance"}
             heading="체중 유지"
             description="균형 잡힌 식습관과 운동 유지로 몸무게 유지"
-            onClick={() => onTargetChange("maintenance")}
+            onClick={() => {
+              onTargetChange("maintenance");
+              onWeightGainRateChange("0", 0);
+            }}
           />
           <CardButton
             isActive={target === "increase"}
             heading="근육량 증가"
             description="근육량을 늘려 몸의 형태와 기능을 개선하며 대사 속도를 높임"
-            onClick={() => onTargetChange("increase")}
+            onClick={() => {
+              onTargetChange("increase");
+              onWeightGainRateChange("0.1", 0.1);
+            }}
           />
         </VStack>
       </FormControl>
-      <FormControl>
-        <FormLabel>주간 체중 증감량 (kg)</FormLabel>
-        <NumberInput
-          value={weightGainRate}
-          precision={1}
-          max={20}
-          min={0.1}
-          step={0.1}
-          onChange={onWeightGainRateChange}
-        >
-          <NumberInputField />
-          <NumberInputStepper>
-            <NumberIncrementStepper />
-            <NumberDecrementStepper />
-          </NumberInputStepper>
-        </NumberInput>
-      </FormControl>
+      {target === "maintenance" ? null : (
+        <FormControl>
+          <FormLabel>
+            {target === "loss"
+              ? "주간 체중 감소량(kg)"
+              : "주간 체중 증가량(kg)"}
+          </FormLabel>
+          <NumberInput
+            value={weightGainRate}
+            precision={1}
+            max={20}
+            min={0.1}
+            step={0.1}
+            onChange={onWeightGainRateChange}
+          >
+            <NumberInputField />
+            <NumberInputStepper>
+              <NumberIncrementStepper />
+              <NumberDecrementStepper />
+            </NumberInputStepper>
+          </NumberInput>
+          <FormHelperText>
+            주 단위로 {target === "loss" ? "감량" : "증량"}할 체중을 설정하세요
+          </FormHelperText>
+        </FormControl>
+      )}
     </Stack>
   );
 

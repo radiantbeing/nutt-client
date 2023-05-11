@@ -71,7 +71,23 @@ export default function SignUp() {
   const onWeightGainRateChange = (stringValue: string, numberValue: number) =>
     setWeightGainRate(numberValue);
   const onPalChange = (pal: 1.2 | 1.375 | 1.55 | 1.725) => setPal(pal);
-  console.log(target, weightGainRate, pal);
+
+  console.log("회원가입 정보: ", {
+    password,
+    email,
+    name,
+    gender,
+    age,
+    height,
+    weight,
+    target,
+    weightGainRate,
+    pal,
+    dailyKcal,
+    dailyCarbohydrate,
+    dailyProtein,
+    dailyFat,
+  });
 
   switch (stage) {
     case "회원가입":
