@@ -85,19 +85,22 @@ export default function SignUp() {
           onPasswordChange={onPasswordChange}
           onPrevClick={() => navigate("/")}
           onNextClick={() => {
-            // TODO: 테스트 후 주석 해제
-            // if (isEmailValid && isPasswordValid) {
-            setStage("기초정보수집");
-            // } else {
-            //   toast({
-            //     position: "top",
-            //     title: "회원가입 실패",
-            //     description: "이메일 또는 비밀번호를 확인해주세요.",
-            //     status: "error",
-            //     duration: 3000,
-            //     isClosable: true,
-            //   });
-            // }
+            if (isEmailValid && isPasswordValid) {
+              setStage("기초정보수집");
+            } else {
+              const id = "basic-info-warning-toast";
+              if (!toast.isActive(id)) {
+                toast({
+                  id,
+                  position: "top",
+                  title: "회원가입 오류",
+                  description: "이메일 또는 비밀번호를 확인해주세요.",
+                  status: "warning",
+                  duration: 3000,
+                  isClosable: true,
+                });
+              }
+            }
           }}
         />
       );
@@ -116,19 +119,22 @@ export default function SignUp() {
           onWeightChange={onWeightChange}
           onPrevClick={() => setStage("회원가입")}
           onNextClick={() => {
-            // TODO: 테스트 후 주석 해제
-            // if (!(name === "")) {
-            setStage("건강목표설정");
-            // } else {
-            //   toast({
-            //     position: "top",
-            //     title: "이름 공란",
-            //     description: "이름을 확인해주세요.",
-            //     status: "error",
-            //     duration: 3000,
-            //     isClosable: true,
-            //   });
-            // }
+            if (!(name === "")) {
+              setStage("건강목표설정");
+            } else {
+              const id = "health-goal-warning-toast";
+              if (!toast.isActive(id)) {
+                toast({
+                  id,
+                  position: "top",
+                  title: "회원가입 오류",
+                  description: "이름을 확인해주세요.",
+                  status: "warning",
+                  duration: 3000,
+                  isClosable: true,
+                });
+              }
+            }
           }}
         />
       );

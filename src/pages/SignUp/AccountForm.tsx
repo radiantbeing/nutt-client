@@ -86,14 +86,11 @@ const SignUp: FC<SignUpProps> = ({
           <FormHelperText>비밀번호를 입력해주세요</FormHelperText>
         ) : (
           <FormHelperText>
-            비밀번호 유효성 |{" "}
             {isPasswordValid ? (
-              <Text as="strong" color="green.500">
-                사용 가능
-              </Text>
+              <Text color="green.500">사용 가능한 비밀번호입니다</Text>
             ) : (
-              <Text as="strong" color="red.500">
-                사용 불가
+              <Text color="red.500">
+                8~20자의 영문+숫자+특수문자(!, @, #)를 사용해주세요
               </Text>
             )}
           </FormHelperText>
