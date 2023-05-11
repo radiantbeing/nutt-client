@@ -10,25 +10,84 @@ import {
   createRoutesFromElements,
   Route,
   RouterProvider,
+  useNavigate,
 } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import SignUp from "./pages/SignUp/SignUp";
 import SignIn from "./pages/SignIn/SignIn";
-
 import DietAnalysisPage from "./pages/Analysis/DietAnalysisPage";
 import Chat from "./pages/Chat/Chat";
 import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
 import Index from "./pages/Index";
+import { useEffect } from "react";
+
+function ProtectedRoute(props: { children: any }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (!accessToken) {
+      console.error("ACCESS_DENIED: 로그인이 필요한 페이지입니다.");
+      navigate("/");
+    }
+  }, [navigate]);
+
+  return props.children;
+}
+
+function ForbiddenRoute(props: { children: any }) {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      console.error(
+        "ACCESS_DENIED: 로그인 상태에서 접근할 수 없는 페이지입니다."
+      );
+      navigate("/");
+    }
+  }, [navigate]);
+
+  return props.children;
+}
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route errorElement={<ErrorPage />}>
       <Route index element={<Index />} />
-      <Route path="signup" element={<SignUp />} />
-      <Route path="login" element={<SignIn />} />
-      <Route path="analysis" element={<DietAnalysisPage />} />
-      <Route path="chat" element={<Chat />} />
+      <Route
+        path="signup"
+        element={
+          <ForbiddenRoute>
+            <SignUp />
+          </ForbiddenRoute>
+        }
+      />
+      <Route
+        path="login"
+        element={
+          <ForbiddenRoute>
+            <SignIn />
+          </ForbiddenRoute>
+        }
+      />
+      <Route
+        path="analysis"
+        element={
+          <ProtectedRoute>
+            <DietAnalysisPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="chat"
+        element={
+          <ProtectedRoute>
+            <Chat />
+          </ProtectedRoute>
+        }
+      />
     </Route>
   )
 );
