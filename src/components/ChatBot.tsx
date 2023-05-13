@@ -7,7 +7,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-import { getMessage } from "../api/ChatGPT";
+import useChatGPT from "../hooks/useChatGPT";
 
 function ChatAvatar() {
   const breathe = keyframes`
@@ -61,18 +61,20 @@ function ChatBox(props: ChatBoxProps) {
 }
 
 type ChatBotProps = {
-  question?: string;
-  message?: string;
+  question?: string; // ChatGPT에 전달할 질문
+  message?: string; // 사용자 정의 문자열
 };
 
 export default function ChatBot(props: ChatBotProps) {
   const [message, setMessage] = useState<string>(props.message || "");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
+  const { callChatGPT } = useChatGPT();
+
   useEffect(() => {
     if (props.question) {
       setIsLoading(true);
-      getMessage(props.question).then((msg) => {
+      callChatGPT(props.question).then((msg) => {
         setIsLoading(false);
         setMessage(msg);
       });
@@ -81,7 +83,8 @@ export default function ChatBot(props: ChatBotProps) {
       setIsLoading(false);
       setMessage("");
     };
-  }, [props.question]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <VStack w={"full"} alignItems="flex-start">

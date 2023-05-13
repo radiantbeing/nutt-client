@@ -16,35 +16,20 @@ import {
   HStack,
   Badge,
   AspectRatio,
-  VStack,
-  LinkBox,
   Icon,
   Box,
-  keyframes,
-  Button,
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverArrow,
-  PopoverHeader,
-  PopoverBody,
 } from "@chakra-ui/react";
 import ChatBot from "../../components/ChatBot";
 import Header from "../../components/Header";
 import TemplateGrid from "../../layouts/TemplateGrid";
 import sampleFood from "../../assets/sample_food.jpg";
 import ArticleHeading from "../../components/ArticleHeading";
-import { Link as RouterLink } from "react-router-dom";
 import { BsFire } from "react-icons/bs";
 import { BiBowlRice } from "react-icons/bi";
-import { TbMeat, TbPhotoSensor2 } from "react-icons/tb";
 import { GiJellyBeans } from "react-icons/gi";
-import { ImHome } from "react-icons/im";
-import { BsFillChatLeftTextFill } from "react-icons/bs";
-import { MdOutlinePhotoCamera } from "react-icons/md";
 import { IconType } from "react-icons/lib/esm/iconBase";
-import { FC } from "react";
 import NavigationBar from "../../components/NavigationBar";
+import { TbMeat } from "react-icons/tb";
 
 type NutrientCardProps = {
   name: string;
@@ -89,82 +74,12 @@ function NutrientCard(props: NutrientCardProps) {
   );
 }
 
-const RecordButton: FC = () => {
-  const breathe = keyframes`
-      0% {
-        box-shadow: 0 0 0 7px rgb(255, 212, 206);
-      }
-      50% {
-        box-shadow: 0 0 0 5px rgb(255, 212, 206)
-      }
-      100% {
-        box-shadow: 0 0 0 7px rgb(255, 212, 206);
-      }
-     `;
-  return (
-    <Popover>
-      <PopoverTrigger>
-        <Button
-          boxSize="32px"
-          minWidth={0}
-          borderRadius="full"
-          bg="#ff9386"
-          animation={`${breathe} 2s ease-in-out infinite`}
-          _hover={{ background: "#ff9386" }}
-          _active={{ background: "#f77a6a" }}
-        />
-      </PopoverTrigger>
-      <PopoverContent width={200}>
-        <PopoverArrow />
-        <PopoverHeader>
-          <Text as="b">촬영 모드</Text>
-        </PopoverHeader>
-        <PopoverBody padding={0}>
-          <VStack>
-            <LinkBox
-              width="full"
-              padding={4}
-              display="flex"
-              gap={3}
-              alignItems="center"
-              as={RouterLink}
-              to="/realtime-recognition"
-              _hover={{ backgroundColor: "gray.100" }}
-              _active={{ backgroundColor: "gray.200" }}
-              justifyContent="center"
-              fontWeight="medium"
-            >
-              <Icon as={TbPhotoSensor2} boxSize={6} color="green.500" />
-              <Text display="inline">실시간 인식 모드</Text>
-            </LinkBox>
-            <LinkBox
-              width="full"
-              padding={4}
-              display="flex"
-              gap={3}
-              alignItems="center"
-              as={RouterLink}
-              to="/photo-recognition"
-              _hover={{ backgroundColor: "gray.200" }}
-              justifyContent="center"
-              fontWeight="medium"
-            >
-              <Icon as={MdOutlinePhotoCamera} boxSize={6} color="green.500" />
-              <Text display="inline">사진 인식 모드</Text>
-            </LinkBox>
-          </VStack>
-        </PopoverBody>
-      </PopoverContent>
-    </Popover>
-  );
-};
-
 export default function Home() {
-  const header = <Header>홍길동님</Header>;
+  const header = <Header>안녕하세요, 홍길동님.</Header>;
 
   const main = (
     <Stack spacing={4}>
-      <ChatBot question="오늘 아침엔 샐러드를 먹었어. 영양학적 측면에서 평가해줘." />
+      <ChatBot question="건강한 식단을 위한 팁을 알려줘." />
       <ArticleHeading text="2023년 03월 23일" />
       <SimpleGrid w="full" padding={1} columns={2} spacing={4}>
         <NutrientCard
