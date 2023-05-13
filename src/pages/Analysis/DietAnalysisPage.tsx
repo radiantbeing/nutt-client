@@ -14,6 +14,8 @@ import {
   Tr,
   Text,
   Flex,
+  Image,
+  Box,
 } from "@chakra-ui/react";
 import Header from "../../components/Header";
 import ChatBot from "../../components/ChatBot";
@@ -25,8 +27,18 @@ export default function DietAnalysisPage() {
   const header = <Header>식단 분석 결과</Header>;
 
   const main = (
-    <Stack spacing={8} w="full">
+    <Stack spacing={6} w="full">
       <ChatBot question="오늘은 우동을 먹었어. 영양학적 측면에서 평가해줘." />
+      <Stack spacing={3}>
+        <ArticleHeading text="인식 결과" />
+        <Box border="1px" borderColor="gray.100" borderRadius="lg" padding={2}>
+          <Image
+            src="https://images.unsplash.com/photo-1493770348161-369560ae357d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            alt="Green double couch with wooden legs"
+            borderRadius="lg"
+          />
+        </Box>
+      </Stack>
       <Stack spacing={3}>
         <ArticleHeading text="식사 시간" />
         <RadioGroup defaultValue="아침">
@@ -94,7 +106,7 @@ export default function DietAnalysisPage() {
           borderRadius={8}
           padding={2}
         >
-          <Table variant="simple" size="md">
+          <Table variant="simple" size="sm">
             <Thead>
               <Tr>
                 <Th>이름</Th>
@@ -113,7 +125,7 @@ export default function DietAnalysisPage() {
                 <Td isNumeric>40</Td>
               </Tr>
             </Tbody>
-            <Tfoot>
+            {/* <Tfoot>
               <Tr>
                 <Th>합계</Th>
                 <Th isNumeric>235</Th>
@@ -121,7 +133,7 @@ export default function DietAnalysisPage() {
                 <Th isNumeric>40</Th>
                 <Th isNumeric>40</Th>
               </Tr>
-            </Tfoot>
+            </Tfoot> */}
           </Table>
         </TableContainer>
       </Stack>
