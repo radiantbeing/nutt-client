@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import Header from "../../components/Header";
 import TemplateGrid from "../../layouts/TemplateGrid";
 import NavigationBar from "../../components/NavigationBar";
@@ -14,16 +14,22 @@ const Chat: FC = () => {
     role: "user",
     content: "",
   });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
   const { callChatGPT, context } = useChatGPT();
 
-  const onMessageSubmit = async (e: React.SyntheticEvent) => {
+  const onMessageSubmit = async (
+    e: React.SyntheticEvent,
+    ref: React.RefObject<HTMLInputElement>
+  ) => {
     e.preventDefault();
     if (message.content === "") return;
 
-    callChatGPT(message.content);
+    setIsLoading(true);
+    await callChatGPT(message.content);
     setMessage({ role: "user", content: "" });
+    setIsLoading(false);
   };
 
   const header = <Header onPrevClick={() => navigate("/")}>채팅</Header>;
@@ -37,6 +43,7 @@ const Chat: FC = () => {
           setMessage({ role: "user", content: e.target.value })
         }
         onMessageSubmit={onMessageSubmit}
+        isLoading={isLoading}
       />
     </Flex>
   );

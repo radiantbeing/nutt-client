@@ -60,14 +60,18 @@ const useChatGPT = () => {
       return responseMsg;
     } catch (error) {
       console.error(error);
-      toast({
-        position: "top",
-        title: "ChatGPT API 호출에 실패했습니다.",
-        description: "잠시 후 다시 시도해주세요.",
-        status: "error",
-        duration: 2500,
-        isClosable: true,
-      });
+      const id = "chat-gpt-error-toast";
+      if (!toast.isActive(id)) {
+        toast({
+          id,
+          position: "top",
+          title: "ChatGPT API 호출에 실패했습니다.",
+          description: "잠시 후 다시 시도해주세요.",
+          status: "error",
+          duration: 2500,
+          isClosable: true,
+        });
+      }
       return "ChatGPT API 호출에 실패했습니다.";
     }
   };
