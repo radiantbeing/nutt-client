@@ -75,7 +75,7 @@ function NutrientCard(props: NutrientCardProps) {
 }
 
 export default function Home() {
-  const header = <Header>안녕하세요, 홍길동님.</Header>;
+  const header = <Header isMoreMenuVisible>안녕하세요, 홍길동님.</Header>;
 
   const main = (
     <Stack spacing={4}>
