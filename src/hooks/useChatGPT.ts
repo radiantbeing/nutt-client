@@ -4,7 +4,6 @@ import { useState } from "react";
 import Message from "../interfaces/Message";
 
 const useChatGPT = () => {
-  const [question, setQuestion] = useState("");
   const [context, setContext] = useState<Message[]>([]);
 
   const toast = useToast();
@@ -22,34 +21,36 @@ const useChatGPT = () => {
     4. You shouldn't ask questions. In other words, there should be no question marks.
     5. You have to answer in Korean.
     6. Use the emoji properly.
-    7. Don't answer questions that aren't health-related.
+    7. Don't answer questions that aren't related to healthcare and diet, but nutritional assessments of food are okay.
   `,
   };
 
-  const config = {
-    method: "post",
-    url: "https://api.openai.com/v1/chat/completions",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
-    },
-    data: {
-      model: "gpt-3.5-turbo",
-      messages: context
-        ? [initMsg, ...context, { role: "user", content: question }]
-        : [initMsg, { role: "user", content: question }],
-    },
-  };
-
   const callChatGPT = async (question: string) => {
-    setQuestion(question);
-    setContext([
+    const tempContext: Message[] = [
       ...context,
       { role: "user", content: question },
       { role: "assistant", content: "" },
-    ]);
+    ];
+
+    setContext(tempContext);
+
+    const config = {
+      method: "post",
+      url: "https://api.openai.com/v1/chat/completions",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${process.env.REACT_APP_OPENAI_API_KEY}`,
+      },
+      data: {
+        model: "gpt-3.5-turbo",
+        messages: context
+          ? [initMsg, ...context, { role: "user", content: question }]
+          : [initMsg, { role: "user", content: question }],
+      },
+    };
 
     try {
+      console.log(config);
       const { data } = await axios(config);
       const responseMsg = data.choices[0].message.content;
       setContext([
