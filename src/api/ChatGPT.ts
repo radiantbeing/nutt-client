@@ -1,46 +1,42 @@
 import axios from "axios";
 
-interface ChatGPTResponse {
-  status: number;
-  statusText: string;
-  config: object;
-  headers: object;
-  data: {
-    choices: {
-      finish_reason: string;
-      index: number;
-      message: {
-        role: "system" | "user" | "assistant";
-        content: string; // 응답 메시지
-      };
-    }[];
-    created: number;
-    id: string;
-    model: string;
-    object: string;
-    usage: {
-      prompt_tokens: number;
-      completion_tokens: number;
-      total_tokens: number;
-    };
-  };
+interface Message {
+  role: string;
+  content: string;
 }
 
-interface ChatGPTRequest {
-  method: string;
-  url: string;
-  headers: {
-    "Content-Type": string;
-    Authorization: string;
+export const chatWithChatGPT = async (
+  question: string,
+  context?: string[]
+): Promise<string> => {
+  const modelConfig: Message = {
+    role: "system",
+    content: `
+    You are the AI chatbot of the healthcare application 'Nutt'. You are responsible for answering users' health-related questions.
+  
+    The following are the references.
+  
+    1. You have to answer the user's question within 10 seconds.
+    2. Answers to users' questions must be within 100 characters.
+    3. You have to use honorifics.
+    4. You shouldn't ask questions. In other words, there should be no question marks.
+    5. You have to answer in Korean.
+    6. Use the emoji properly.
+  `,
   };
-  data: {
-    model: string;
-    messages: { role: string; content: string }[];
-  };
-}
 
-export async function getMessage(message: string): Promise<string> {
-  const requestInfo: ChatGPTRequest = {
+  let modelContext: Message[] | null = null;
+  let messages: Message[] = [modelConfig, { role: "user", content: question }];
+
+  if (context) {
+    modelContext = context.map((msg: string) => ({
+      role: "assistant",
+      content: msg,
+    }));
+    messages = messages.splice(1, 0, ...modelContext);
+  }
+
+  const config = {
     method: "post",
     url: "https://api.openai.com/v1/chat/completions",
     headers: {
@@ -49,31 +45,16 @@ export async function getMessage(message: string): Promise<string> {
     },
     data: {
       model: "gpt-3.5-turbo",
-      messages: [
-        {
-          role: "system",
-          content: `
-          You are the AI chatbot of the healthcare application 'Nutt'. You are responsible for answering users' health-related questions.
-
-          The following are the references.
-
-          1. You have to answer the user's question within 10 seconds.
-          2. Answers to users' questions must be within 100 characters.
-          3. You have to use honorifics.
-          4. You shouldn't ask questions. In other words, there should be no question marks.
-          5. You have to answer in Korean.
-          6. Use the emoji properly.
-        `,
-        },
-        { role: "user", content: message },
-      ],
+      messages,
     },
   };
+
   try {
-    const response: ChatGPTResponse = await axios(requestInfo);
-    return response.data.choices[0].message.content;
+    const { data } = await axios(config);
+    const response = data.choices[0].message.content;
+    return response;
   } catch (error) {
     console.error(error);
     return "ChatGPT API 호출에 실패했습니다.";
   }
-}
+};
