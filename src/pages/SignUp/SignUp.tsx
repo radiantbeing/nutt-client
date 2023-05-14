@@ -12,10 +12,11 @@ import RecommendedIntakeForm from "./RecommendedIntakeForm";
 const API_URL = process.env.REACT_APP_NUTT_API_URL;
 
 export default function SignUp() {
+  // Hooks
   const navigate = useNavigate();
   const toast = useToast();
 
-  // 회원가입 단계
+  // States
   const [stage, setStage] = useState<
     | "회원가입"
     | "기초정보수집"
@@ -23,8 +24,6 @@ export default function SignUp() {
     | "활동량추정"
     | "권장섭취량계산"
   >("회원가입");
-
-  // 회원 정보
   const [email, setEmail] = useState<string>("");
   const [isEmailValid, setIsEmailValid] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
@@ -71,6 +70,16 @@ export default function SignUp() {
   const onWeightGainRateChange = (stringValue: string, numberValue: number) =>
     setWeightGainRate(numberValue);
   const onPalChange = (pal: 1.2 | 1.375 | 1.55 | 1.725) => setPal(pal);
+  const onDailyKcalChange = (stringValue: string, numberValue: number) =>
+    setDailyKcal(numberValue);
+  const onDailyCarbohydrateChange = (
+    stringValue: string,
+    numberValue: number
+  ) => setDailyCarbohydrate(numberValue);
+  const onDailyProteinChange = (stringValue: string, numberValue: number) =>
+    setDailyProtein(numberValue);
+  const onDailyFatChange = (stringValue: string, numberValue: number) =>
+    setDailyFat(numberValue);
 
   console.log("회원가입 정보: ", {
     password,
@@ -101,9 +110,7 @@ export default function SignUp() {
           onPasswordChange={onPasswordChange}
           onPrevClick={() => navigate("/")}
           onNextClick={() => {
-            if (isEmailValid && isPasswordValid) {
-              setStage("기초정보수집");
-            } else {
+            if (!isEmailValid || !isPasswordValid) {
               const id = "basic-info-warning-toast";
               if (!toast.isActive(id)) {
                 toast({
@@ -115,8 +122,34 @@ export default function SignUp() {
                   duration: 3000,
                   isClosable: true,
                 });
+                return;
               }
             }
+            axios
+              .post(`${API_URL}/api/email-check`, {
+                email,
+              })
+              .then((res) => {
+                console.log(res);
+                if (res.data.message === "DATA_SUCCESSFULLY_PROCESSED") {
+                  setStage("기초정보수집");
+                }
+              })
+              .catch((err) => {
+                const id = "email-duplicate-error-toast";
+                const { errorMessage, description } = err.response.data;
+                if (!toast.isActive(id)) {
+                  toast({
+                    id,
+                    position: "top",
+                    title: errorMessage,
+                    description: description,
+                    status: "error",
+                    duration: 3000,
+                    isClosable: true,
+                  });
+                }
+              });
           }}
         />
       );
@@ -171,12 +204,47 @@ export default function SignUp() {
           pal={pal}
           onPalChange={onPalChange}
           onPrevClick={() => setStage("건강목표설정")}
-          onNextClick={() => setStage("권장섭취량계산")}
+          onNextClick={() => {
+            const user = {
+              age,
+              gender,
+              height,
+              weight,
+              pal,
+              weightGainRate,
+              target,
+            };
+            axios
+              .post(`${API_URL}/api/set/achieve`, user)
+              .then((res) => {
+                const { dailyCarbohydrate, dailyFat, dailyKcal, dailyProtein } =
+                  res.data.data;
+                console.log(res.data);
+                setDailyCarbohydrate(parseInt(dailyCarbohydrate));
+                setDailyFat(parseInt(dailyFat));
+                setDailyKcal(parseInt(dailyKcal));
+                setDailyProtein(parseInt(dailyProtein));
+                setStage("권장섭취량계산");
+                return;
+              })
+              .catch((err) => {
+                console.error(err);
+                return;
+              });
+          }}
         />
       );
     case "권장섭취량계산":
       return (
         <RecommendedIntakeForm
+          dailyKcal={dailyKcal}
+          dailyCarbohydrate={dailyCarbohydrate}
+          dailyProtein={dailyProtein}
+          dailyFat={dailyFat}
+          onDailyKcalChange={onDailyKcalChange}
+          onDailyCarbohydrateChange={onDailyCarbohydrateChange}
+          onDailyProteinChange={onDailyProteinChange}
+          onDailyFatChange={onDailyFatChange}
           onPrevClick={() => setStage("활동량추정")}
           onNextClick={async () => {
             const userProfile = {
@@ -207,7 +275,7 @@ export default function SignUp() {
                   password,
                 }
               );
-
+              console.log(loginResponse.data);
               const { accessToken }: JWTTokens = loginResponse.data;
               localStorage.setItem("accessToken", accessToken);
               navigate("/");

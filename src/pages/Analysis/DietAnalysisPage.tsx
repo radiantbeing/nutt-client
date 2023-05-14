@@ -1,6 +1,5 @@
 import {
   HStack,
-  Progress,
   Radio,
   RadioGroup,
   Stack,
@@ -8,12 +7,9 @@ import {
   TableContainer,
   Tbody,
   Td,
-  Tfoot,
   Th,
   Thead,
   Tr,
-  Text,
-  Flex,
   Image,
   Box,
 } from "@chakra-ui/react";
@@ -22,18 +18,46 @@ import ChatBot from "../../components/ChatBot";
 import NavigateButton from "../../components/NavigateButton";
 import TemplateGrid from "../../layouts/TemplateGrid";
 import ArticleHeading from "../../components/ArticleHeading";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import scanSample from "../../assets/scan_sample.jpg";
+
+interface FoodNutrient {
+  name: string;
+  kcal: number;
+  carbohydrate: number;
+  protein: number;
+  fat: number;
+}
 
 export default function DietAnalysisPage() {
+  const [scannedFoodNutrients, setScannedFoodNutrients] = useState<
+    FoodNutrient[]
+  >([
+    { name: "계란찜", kcal: 67.0, carbohydrate: 3.0, protein: 7.0, fat: 3.0 },
+  ]);
+
+  useEffect(() => {
+    // setScannedFoodNutrients([
+    //   { name: "계란찜", kcal: 67.0, carbohydrate: 3.0, protein: 7.0, fat: 3.0 },
+    // ]);
+    axios
+      .get("http://219.255.1.253:8080/api/foodInfo/계란찜")
+      .then((res) => setScannedFoodNutrients([res.data.data]));
+  }, []);
+
   const header = <Header>식단 분석 결과</Header>;
 
   const main = (
     <Stack spacing={6} w="full">
-      <ChatBot question="오늘은 우동을 먹었어. 영양학적 측면에서 평가해줘." />
+      <ChatBot
+        question={`오늘은 ${scannedFoodNutrients[0].name}을 먹었어. 영양학적 측면에서 평가해줘.`}
+      />
       <Stack spacing={3}>
         <ArticleHeading text="인식 결과" />
         <Box border="1px" borderColor="gray.100" borderRadius="lg" padding={2}>
           <Image
-            src="https://images.unsplash.com/photo-1493770348161-369560ae357d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80"
+            src={scanSample}
             alt="Green double couch with wooden legs"
             borderRadius="lg"
           />
@@ -51,7 +75,7 @@ export default function DietAnalysisPage() {
           </Stack>
         </RadioGroup>
       </Stack>
-      <Stack spacing={3}>
+      {/* <Stack spacing={3}>
         <ArticleHeading text="목표 영양소 달성량" />
         <Stack
           spacing={3}
@@ -97,7 +121,7 @@ export default function DietAnalysisPage() {
             <Progress colorScheme="green" size="xs" value={20} />
           </Stack>
         </Stack>
-      </Stack>
+      </Stack> */}
       <Stack spacing={3}>
         <ArticleHeading text="영양 성분 분석" />
         <TableContainer
@@ -117,21 +141,25 @@ export default function DietAnalysisPage() {
               </Tr>
             </Thead>
             <Tbody>
-              <Tr>
-                <Td>우동</Td>
-                <Td isNumeric>235</Td>
-                <Td isNumeric>40</Td>
-                <Td isNumeric>40</Td>
-                <Td isNumeric>40</Td>
-              </Tr>
+              {scannedFoodNutrients.map((foodNutrient) => {
+                return (
+                  <Tr key={foodNutrient.name}>
+                    <Td>{foodNutrient.name}</Td>
+                    <Td isNumeric>{foodNutrient.kcal}</Td>
+                    <Td isNumeric>{foodNutrient.carbohydrate}</Td>
+                    <Td isNumeric>{foodNutrient.protein}</Td>
+                    <Td isNumeric>{foodNutrient.fat}</Td>
+                  </Tr>
+                );
+              })}
             </Tbody>
             {/* <Tfoot>
               <Tr>
                 <Th>합계</Th>
-                <Th isNumeric>235</Th>
-                <Th isNumeric>40</Th>
-                <Th isNumeric>40</Th>
-                <Th isNumeric>40</Th>
+                <Th isNumeric>67</Th>
+                <Th isNumeric>3</Th>
+                <Th isNumeric>7</Th>
+                <Th isNumeric>3</Th>
               </Tr>
             </Tfoot> */}
           </Table>

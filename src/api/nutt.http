@@ -1,0 +1,16 @@
+###
+GET http://219.255.1.253:8080/api/foodInfo/계란찜
+
+###
+POST http://219.255.1.253:8080/api/set/achieve
+Content-Type: application/json
+
+{
+  "age": 24,
+  "gender": "MALE",
+  "height": 180,
+  "weight": 80,
+  "pal": 1.2,
+  "weightGainRate": 1,
+  "target": "loss"
+}

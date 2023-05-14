@@ -16,11 +16,27 @@ import NavigateButton from "../../components/NavigateButton";
 import TemplateGrid from "../../layouts/TemplateGrid";
 
 type RecommendedIntakeFormProps = {
+  dailyKcal: number;
+  dailyCarbohydrate: number;
+  dailyProtein: number;
+  dailyFat: number;
+  onDailyKcalChange: (stringValue: string, numberValue: number) => void;
+  onDailyCarbohydrateChange: (stringValue: string, numberValue: number) => void;
+  onDailyProteinChange: (stringValue: string, numberValue: number) => void;
+  onDailyFatChange: (stringValue: string, numberValue: number) => void;
   onPrevClick: () => void;
   onNextClick: () => void;
 };
 
 const RecommendedIntakeForm: FC<RecommendedIntakeFormProps> = ({
+  dailyKcal,
+  dailyCarbohydrate,
+  dailyProtein,
+  dailyFat,
+  onDailyKcalChange,
+  onDailyCarbohydrateChange,
+  onDailyProteinChange,
+  onDailyFatChange,
   onPrevClick,
   onNextClick,
 }) => {
@@ -32,7 +48,13 @@ const RecommendedIntakeForm: FC<RecommendedIntakeFormProps> = ({
       <SimpleGrid columns={2} spacing={6}>
         <FormControl>
           <FormLabel>섭취 칼로리 (kcal)</FormLabel>
-          <NumberInput defaultValue={2000} max={5000} min={100} step={100}>
+          <NumberInput
+            value={dailyKcal}
+            max={5000}
+            min={100}
+            step={100}
+            onChange={onDailyKcalChange}
+          >
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -42,7 +64,13 @@ const RecommendedIntakeForm: FC<RecommendedIntakeFormProps> = ({
         </FormControl>
         <FormControl>
           <FormLabel>탄수화물 (g)</FormLabel>
-          <NumberInput defaultValue={50} max={5000} min={100} step={10}>
+          <NumberInput
+            value={dailyCarbohydrate}
+            max={5000}
+            min={100}
+            step={10}
+            onChange={onDailyCarbohydrateChange}
+          >
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -52,7 +80,13 @@ const RecommendedIntakeForm: FC<RecommendedIntakeFormProps> = ({
         </FormControl>
         <FormControl>
           <FormLabel>단백질 (g)</FormLabel>
-          <NumberInput defaultValue={50} max={5000} min={100} step={10}>
+          <NumberInput
+            value={dailyProtein}
+            max={5000}
+            min={100}
+            step={10}
+            onChange={onDailyProteinChange}
+          >
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
@@ -62,7 +96,13 @@ const RecommendedIntakeForm: FC<RecommendedIntakeFormProps> = ({
         </FormControl>
         <FormControl>
           <FormLabel>지방 (g)</FormLabel>
-          <NumberInput defaultValue={50} max={5000} min={100} step={10}>
+          <NumberInput
+            value={dailyFat}
+            max={5000}
+            min={100}
+            step={10}
+            onChange={onDailyFatChange}
+          >
             <NumberInputField />
             <NumberInputStepper>
               <NumberIncrementStepper />
