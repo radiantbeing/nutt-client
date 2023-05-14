@@ -6,6 +6,9 @@ import {
   Stack,
   Link,
   useToast,
+  InputGroup,
+  Button,
+  InputRightElement,
 } from "@chakra-ui/react";
 import Header from "../../components/Header";
 import ChatBot from "../../components/ChatBot";
@@ -24,6 +27,9 @@ export default function SignIn() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const toast = useToast();
+  const [showPassword, setShowPassword] = useState(false);
+
+  const handleShowClick = () => setShowPassword(!showPassword);
 
   const header = (
     <Header onPrevClick={() => navigate("/signup")}>로그인</Header>
@@ -44,13 +50,20 @@ export default function SignIn() {
       </FormControl>
       <FormControl>
         <FormLabel>비밀번호</FormLabel>
-        <Input
-          type="password"
-          placeholder="8자리 이상의 영문+숫자"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-            setPassword(e.target.value);
-          }}
-        />
+        <InputGroup size="md">
+          <Input
+            type={showPassword ? "text" : "password"}
+            placeholder="비밀번호 입력"
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+              setPassword(e.target.value);
+            }}
+          />
+          <InputRightElement width="4.5rem">
+            <Button h="1.75rem" size="sm" onClick={handleShowClick}>
+              {showPassword ? "숨기기" : "보기"}
+            </Button>
+          </InputRightElement>
+        </InputGroup>
         <FormHelperText>
           비밀번호를 잊으셨나요?{" "}
           <Link
@@ -85,9 +98,10 @@ export default function SignIn() {
           dispatch({ type: "SET_ACCESS_TOKEN", payload: accessToken });
           navigate("/");
         } catch (error) {
-          const toastId = "login-failed-toast";
-          if (!toast.isActive(toastId)) {
+          const id = "login-failed-toast";
+          if (!toast.isActive(id)) {
             toast({
+              id,
               position: "top",
               title: "로그인 실패",
               description: "이메일 혹은 비밀번호를 다시 확인하세요.",
