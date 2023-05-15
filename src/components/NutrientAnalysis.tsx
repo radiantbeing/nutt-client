@@ -16,7 +16,7 @@ import {
   AspectRatio,
   TableCaption,
 } from "@chakra-ui/react";
-import FoodNutrient from "../interfaces/FoodNutrients";
+import FoodNutrient from "../interfaces/Food";
 import ArticleHeading from "./ArticleHeading";
 
 type ScannedPictureProps = {

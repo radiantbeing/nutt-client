@@ -32,7 +32,7 @@ const MoreMenuButton: FC<MoreMenuButtonProps> = ({ isMoreMenuVisible }) => {
       <MenuList minW="0" w={"160px"}>
         <MenuItem
           icon={<RepeatClockIcon />}
-          onClick={() => navigate("/diet-log")}
+          onClick={() => navigate("/meal-record")}
         >
           식단 기록
         </MenuItem>

@@ -21,7 +21,7 @@ import {
   NutrientAnalysisTable,
 } from "../../components/NutrientAnalysis";
 import { useNavigate } from "react-router-dom";
-import FoodNutrient from "../../interfaces/FoodNutrients";
+import Food from "../../interfaces/Food";
 
 function Loading() {
   return (
@@ -36,7 +36,7 @@ function Loading() {
 
 export default function DietAnalysisPage() {
   // States
-  const [scannedFood, setScannedFood] = useState<FoodNutrient[]>([]);
+  const [foods, setFoods] = useState<Food[]>([]);
 
   // Hooks
   const navigation = useNavigate();
@@ -45,12 +45,16 @@ export default function DietAnalysisPage() {
   useEffect(() => {
     axios.get("http://219.255.1.253:8080/api/foodInfo/계란찜").then((res) => {
       const { data } = res.data;
-      setScannedFood([data]);
+      setFoods([data]);
     });
   }, []);
 
   // Pre-rendering
-  if (scannedFood.length === 0) return <Loading />;
+  if (foods.length === 0) return <Loading />;
+
+  const question = `오늘은 ${foods
+    .map((food) => food.name)
+    .join(", ")}을 먹었어. 영양학적 측면에서 평가해줘.`;
 
   // Components
   const header = (
@@ -59,9 +63,7 @@ export default function DietAnalysisPage() {
 
   const main = (
     <Stack spacing={6} w="full">
-      <ChatBot
-        question={`오늘은 ${scannedFood[0].name}을 먹었어. 영양학적 측면에서 평가해줘.`}
-      />
+      <ChatBot question={question} />
       <ScannedPicture src="https://www.cj.co.kr/images/theKitchen/PHON/0000001946/0000007627/0000001946.jpg" />
       <Stack spacing={3}>
         <ArticleHeading text="식사 시간" />

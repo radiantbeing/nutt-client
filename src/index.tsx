@@ -21,6 +21,7 @@ import { Provider } from "react-redux";
 import configureStore from "./store/configureStore";
 import Index from "./pages/Index";
 import { useEffect } from "react";
+import MealRecord from "./pages/MealRecord/MealRecord";
 
 function ProtectedRoute(props: { children: any }) {
   const navigate = useNavigate();
@@ -85,6 +86,14 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <Chat />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="meal-record"
+        element={
+          <ProtectedRoute>
+            <MealRecord />
           </ProtectedRoute>
         }
       />

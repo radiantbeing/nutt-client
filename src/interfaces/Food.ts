@@ -1,4 +1,4 @@
-export default interface FoodNutrient {
+export default interface Food {
   name: string;
   kcal: number;
   carbohydrate: number;
