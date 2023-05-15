@@ -1,17 +1,12 @@
 import {
+  Center,
   HStack,
   Radio,
   RadioGroup,
+  Spinner,
   Stack,
-  Table,
-  TableContainer,
-  Tbody,
-  Td,
-  Th,
-  Thead,
-  Tr,
-  Image,
-  Box,
+  Text,
+  VStack,
 } from "@chakra-ui/react";
 import Header from "../../components/Header";
 import ChatBot from "../../components/ChatBot";
@@ -20,49 +15,54 @@ import TemplateGrid from "../../layouts/TemplateGrid";
 import ArticleHeading from "../../components/ArticleHeading";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import scanSample from "../../assets/scan_sample.jpg";
+import {
+  ScannedPicture,
+  TargetAchievement,
+  NutrientAnalysisTable,
+} from "../../components/NutrientAnalysis";
+import { useNavigate } from "react-router-dom";
+import FoodNutrient from "../../interfaces/FoodNutrients";
 
-interface FoodNutrient {
-  name: string;
-  kcal: number;
-  carbohydrate: number;
-  protein: number;
-  fat: number;
+function Loading() {
+  return (
+    <Center boxSize="full">
+      <VStack spacing={8}>
+        <Spinner size="xl" />
+        <Text>인식한 음식의 정보를 가져오는 중</Text>
+      </VStack>
+    </Center>
+  );
 }
 
 export default function DietAnalysisPage() {
-  const [scannedFoodNutrients, setScannedFoodNutrients] = useState<
-    FoodNutrient[]
-  >([
-    { name: "계란찜", kcal: 67.0, carbohydrate: 3.0, protein: 7.0, fat: 3.0 },
-  ]);
+  // States
+  const [scannedFood, setScannedFood] = useState<FoodNutrient[]>([]);
 
+  // Hooks
+  const navigation = useNavigate();
+
+  // Side-effects
   useEffect(() => {
-    // setScannedFoodNutrients([
-    //   { name: "계란찜", kcal: 67.0, carbohydrate: 3.0, protein: 7.0, fat: 3.0 },
-    // ]);
-    axios
-      .get("http://219.255.1.253:8080/api/foodInfo/계란찜")
-      .then((res) => setScannedFoodNutrients([res.data.data]));
+    axios.get("http://219.255.1.253:8080/api/foodInfo/계란찜").then((res) => {
+      const { data } = res.data;
+      setScannedFood([data]);
+    });
   }, []);
 
-  const header = <Header>식단 분석 결과</Header>;
+  // Pre-rendering
+  if (scannedFood.length === 0) return <Loading />;
+
+  // Components
+  const header = (
+    <Header onPrevClick={() => navigation("/")}>식단 분석 결과</Header>
+  );
 
   const main = (
     <Stack spacing={6} w="full">
       <ChatBot
-        question={`오늘은 ${scannedFoodNutrients[0].name}을 먹었어. 영양학적 측면에서 평가해줘.`}
+        question={`오늘은 ${scannedFood[0].name}을 먹었어. 영양학적 측면에서 평가해줘.`}
       />
-      <Stack spacing={3}>
-        <ArticleHeading text="인식 결과" />
-        <Box border="1px" borderColor="gray.100" borderRadius="lg" padding={2}>
-          <Image
-            src={scanSample}
-            alt="Green double couch with wooden legs"
-            borderRadius="lg"
-          />
-        </Box>
-      </Stack>
+      <ScannedPicture src="https://www.cj.co.kr/images/theKitchen/PHON/0000001946/0000007627/0000001946.jpg" />
       <Stack spacing={3}>
         <ArticleHeading text="식사 시간" />
         <RadioGroup defaultValue="아침">
@@ -75,103 +75,29 @@ export default function DietAnalysisPage() {
           </Stack>
         </RadioGroup>
       </Stack>
-      {/* <Stack spacing={3}>
-        <ArticleHeading text="목표 영양소 달성량" />
-        <Stack
-          spacing={3}
-          border="1px"
-          borderColor="gray.200"
-          borderRadius={8}
-          padding={4}
-        >
-          <Stack>
-            <Flex justify="space-between">
-              <Text fontSize="sm">칼로리</Text>
-              <Text fontSize="sm" color="gray.400">
-                100/500kcal
-              </Text>
-            </Flex>
-            <Progress colorScheme="green" size="xs" value={20} />
-          </Stack>
-          <Stack>
-            <Flex justify="space-between">
-              <Text fontSize="sm">탄수화물</Text>
-              <Text fontSize="sm" color="gray.400">
-                100/500g
-              </Text>
-            </Flex>
-            <Progress colorScheme="green" size="xs" value={20} />
-          </Stack>
-          <Stack>
-            <Flex justify="space-between">
-              <Text fontSize="sm">단백질</Text>
-              <Text fontSize="sm" color="gray.400">
-                100/500g
-              </Text>
-            </Flex>
-            <Progress colorScheme="green" size="xs" value={20} />
-          </Stack>
-          <Stack>
-            <Flex justify="space-between">
-              <Text fontSize="sm">지방</Text>
-              <Text fontSize="sm" color="gray.400">
-                100/500g
-              </Text>
-            </Flex>
-            <Progress colorScheme="green" size="xs" value={20} />
-          </Stack>
-        </Stack>
-      </Stack> */}
-      <Stack spacing={3}>
-        <ArticleHeading text="영양 성분 분석" />
-        <TableContainer
-          border="1px"
-          borderColor="gray.200"
-          borderRadius={8}
-          padding={2}
-        >
-          <Table variant="simple" size="sm">
-            <Thead>
-              <Tr>
-                <Th>이름</Th>
-                <Th isNumeric>칼로리</Th>
-                <Th isNumeric>탄수화물</Th>
-                <Th isNumeric>단백질</Th>
-                <Th isNumeric>지방</Th>
-              </Tr>
-            </Thead>
-            <Tbody>
-              {scannedFoodNutrients.map((foodNutrient) => {
-                return (
-                  <Tr key={foodNutrient.name}>
-                    <Td>{foodNutrient.name}</Td>
-                    <Td isNumeric>{foodNutrient.kcal}</Td>
-                    <Td isNumeric>{foodNutrient.carbohydrate}</Td>
-                    <Td isNumeric>{foodNutrient.protein}</Td>
-                    <Td isNumeric>{foodNutrient.fat}</Td>
-                  </Tr>
-                );
-              })}
-            </Tbody>
-            {/* <Tfoot>
-              <Tr>
-                <Th>합계</Th>
-                <Th isNumeric>67</Th>
-                <Th isNumeric>3</Th>
-                <Th isNumeric>7</Th>
-                <Th isNumeric>3</Th>
-              </Tr>
-            </Tfoot> */}
-          </Table>
-        </TableContainer>
-      </Stack>
+      <TargetAchievement />
+      <NutrientAnalysisTable
+        foods={[
+          {
+            name: "계란찜",
+            kcal: 67.0,
+            carbohydrate: 3.0,
+            protein: 7.0,
+            fat: 3.0,
+          },
+        ]}
+      />
     </Stack>
   );
 
   const footer = (
     <HStack boxSize="full">
-      <NavigateButton onClick={() => {}} variant="outline">
-        재촬영
+      <NavigateButton
+        onClick={() => navigation("/")}
+        variant="outline"
+        colorScheme="red"
+      >
+        기록 취소
       </NavigateButton>
       <NavigateButton onClick={() => {}}>기록하기</NavigateButton>
     </HStack>

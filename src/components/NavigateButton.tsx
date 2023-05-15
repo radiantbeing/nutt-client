@@ -4,12 +4,14 @@ import { FC } from "react";
 type NavigateButtonProps = {
   children: React.ReactNode;
   variant?: "solid" | "outline" | "ghost" | "link";
+  colorScheme?: string;
   onClick: () => void;
 };
 
 const NavigateButton: FC<NavigateButtonProps> = ({
   children,
   variant,
+  colorScheme = "green",
   onClick,
 }) => {
   return (
@@ -17,7 +19,7 @@ const NavigateButton: FC<NavigateButtonProps> = ({
       <Button
         size="lg"
         width="full"
-        colorScheme="green"
+        colorScheme={colorScheme}
         fontWeight="medium"
         variant={variant || "solid"}
         onClick={onClick}
