@@ -235,6 +235,7 @@ export default function Home() {
     } = {
       breakfast: [
         {
+          date: "2023-05-17",
           time: "아침",
           foods: [
             {
@@ -258,6 +259,7 @@ export default function Home() {
       ],
       lunch: [
         {
+          date: "2023-05-17",
           time: "점심",
           foods: [
             {
@@ -272,6 +274,7 @@ export default function Home() {
           nutritionRating: "보통",
         },
         {
+          date: "2023-05-17",
           time: "점심",
           foods: [
             {
@@ -288,6 +291,7 @@ export default function Home() {
       ],
       dinner: [
         {
+          date: "2023-05-17",
           time: "저녁",
           foods: [
             {
