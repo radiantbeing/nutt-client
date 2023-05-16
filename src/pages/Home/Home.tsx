@@ -18,6 +18,8 @@ import {
   AspectRatio,
   Icon,
   Box,
+  Spinner,
+  VStack,
 } from "@chakra-ui/react";
 import ChatBot from "../../components/ChatBot";
 import Header from "../../components/Header";
@@ -30,6 +32,8 @@ import { GiJellyBeans } from "react-icons/gi";
 import { IconType } from "react-icons/lib/esm/iconBase";
 import NavigationBar from "../../components/NavigationBar";
 import { TbMeat } from "react-icons/tb";
+import { useEffect, useState } from "react";
+import { m } from "framer-motion";
 
 type NutrientCardProps = {
   name: string;
@@ -74,8 +78,241 @@ function NutrientCard(props: NutrientCardProps) {
   );
 }
 
+function Loading() {
+  return (
+    <Center boxSize="full">
+      <VStack spacing={8}>
+        <Spinner size="xl" />
+        <Text>사용자 정보를 가져오는 중</Text>
+      </VStack>
+    </Center>
+  );
+}
+
+interface User {
+  name: string;
+  currentKcal: number;
+  targetKcal: number;
+  currentCarbohydrate: number;
+  targetCarbohydrate: number;
+  currentProtein: number;
+  targetProtein: number;
+  currentFat: number;
+  targetFat: number;
+}
+
+interface Food {
+  name: string;
+  kcal: number;
+}
+
+interface Meal {
+  time: "아침" | "점심" | "저녁" | "간식";
+  foods: Food[];
+  nutritionRating: "좋음" | "보통" | "나쁨";
+  img: string;
+}
+
+function MealTab({ meals }: { meals?: Meal[] }) {
+  if (meals?.length === 0 || meals === undefined) {
+    return (
+      <TabPanel paddingLeft={0} paddingRight={0}>
+        <Card variant="outline">
+          <CardBody>
+            <Center gap={4} color="gray.400">
+              <CheckIcon />
+              <Text>기록된 식사가 없습니다</Text>
+            </Center>
+          </CardBody>
+        </Card>
+      </TabPanel>
+    );
+  }
+  return (
+    <TabPanel paddingLeft={0} paddingRight={0}>
+      {meals.map((meal, index) => (
+        <Card key={index} variant="outline" marginBottom={2}>
+          <CardBody p={0}>
+            <HStack padding={[0, 4]}>
+              <AspectRatio ratio={1} width={["35%", "25%"]}>
+                <Image src={meal.img} alt="Food" borderRadius={[0, 8]} />
+              </AspectRatio>
+              <Center width="65%">
+                <Stack spacing={[4, 5]}>
+                  <HStack>
+                    {meal.foods.map((food, index) => (
+                      <Badge key={index} fontSize={["xs", "sm"]}>
+                        #{food.name}
+                      </Badge>
+                    ))}
+                  </HStack>
+                  <HStack spacing={[6, 14]}>
+                    <Stack spacing={[2, 3]}>
+                      <Heading size={["sm", "md"]}>섭취 칼로리</Heading>
+                      <Text fontSize={["sm", "lg"]}>
+                        {meal.foods.reduce(
+                          (accumulator, currentValue) =>
+                            accumulator + currentValue.kcal,
+                          0
+                        )}
+                        kcal
+                      </Text>
+                    </Stack>
+                    <Stack spacing={[2, 3]}>
+                      <Heading size={["sm", "md"]}>영양 균형</Heading>
+                      <Text
+                        fontSize={["sm", "lg"]}
+                        color={
+                          meal.nutritionRating === "좋음"
+                            ? "green.400"
+                            : meal.nutritionRating === "보통"
+                            ? "yellow.400"
+                            : "red.400"
+                        }
+                        fontWeight="semibold"
+                      >
+                        {meal.nutritionRating}
+                      </Text>
+                    </Stack>
+                  </HStack>
+                </Stack>
+              </Center>
+            </HStack>
+          </CardBody>
+        </Card>
+      ))}
+    </TabPanel>
+  );
+}
+
+function MealTabs({
+  breakfast,
+  lunch,
+  dinner,
+  snack,
+}: {
+  breakfast?: Meal[];
+  lunch?: Meal[];
+  dinner?: Meal[];
+  snack?: Meal[];
+}) {
+  return (
+    <Tabs variant="soft-rounded" colorScheme="green" size="sm">
+      <TabList>
+        <Tab>아침</Tab>
+        <Tab>점심</Tab>
+        <Tab>저녁</Tab>
+        <Tab>간식</Tab>
+      </TabList>
+      <TabPanels>
+        <MealTab meals={breakfast} />
+        <MealTab meals={lunch} />
+        <MealTab meals={dinner} />
+        <MealTab meals={snack} />
+      </TabPanels>
+    </Tabs>
+  );
+}
+
 export default function Home() {
-  const header = <Header isMoreMenuVisible>안녕하세요, 홍길동님.</Header>;
+  // States
+  const [user, setUser] = useState<User>();
+  const [breakfast, setBreakfast] = useState<Meal[]>();
+  const [lunch, setLunch] = useState<Meal[]>();
+  const [dinner, setDinner] = useState<Meal[]>();
+  const [snack, setSnack] = useState<Meal[]>();
+
+  // Side-effects
+  useEffect(() => {
+    setUser({
+      name: "홍길동",
+      currentKcal: 200,
+      targetKcal: 1500,
+      currentCarbohydrate: 200,
+      targetCarbohydrate: 500,
+      currentProtein: 200,
+      targetProtein: 500,
+      currentFat: 200,
+      targetFat: 500,
+    });
+  }, []);
+
+  useEffect(() => {
+    const data: {
+      breakfast: Meal[];
+      lunch: Meal[];
+      dinner: Meal[];
+      snack: Meal[];
+    } = {
+      breakfast: [
+        {
+          time: "아침",
+          foods: [
+            {
+              name: "샐러드",
+              kcal: 200,
+            },
+            {
+              name: "계란",
+              kcal: 40,
+            },
+          ],
+          img: "https://via.placeholder.com/150",
+          nutritionRating: "좋음",
+        },
+      ],
+      lunch: [
+        {
+          time: "점심",
+          foods: [
+            {
+              name: "라면",
+              kcal: 232,
+            },
+          ],
+          img: "https://via.placeholder.com/150",
+          nutritionRating: "보통",
+        },
+        {
+          time: "점심",
+          foods: [
+            {
+              name: "도시락",
+              kcal: 329,
+            },
+          ],
+          img: "https://via.placeholder.com/150",
+          nutritionRating: "보통",
+        },
+      ],
+      dinner: [
+        {
+          time: "저녁",
+          foods: [
+            {
+              name: "햄버거",
+              kcal: 600,
+            },
+          ],
+          img: "https://via.placeholder.com/150",
+          nutritionRating: "나쁨",
+        },
+      ],
+      snack: [],
+    };
+    setBreakfast(data.breakfast);
+    setLunch(data.lunch);
+    setDinner(data.dinner);
+    setSnack(data.snack);
+  }, []);
+
+  // Pre-rendering
+  if (!user) {
+    return <Loading />;
+  }
+
+  // Components
+  const header = <Header isMoreMenuVisible>안녕하세요, {user.name}님.</Header>;
 
   const main = (
     <Stack spacing={4}>
@@ -84,9 +321,9 @@ export default function Home() {
       <SimpleGrid w="full" padding={1} columns={2} spacing={4}>
         <NutrientCard
           icon={BsFire}
-          name="칼로리"
-          value={200}
-          maxValue={1500}
+          name="열량"
+          value={user.currentKcal}
+          maxValue={user.targetKcal}
           unit="kcal"
           bgGradient={"linear(to-r, green.400, green.500)"}
           color="white"
@@ -94,88 +331,31 @@ export default function Home() {
         <NutrientCard
           icon={BiBowlRice}
           name="탄수화물"
-          value={200}
-          maxValue={500}
+          value={user.currentCarbohydrate}
+          maxValue={user.targetCarbohydrate}
           unit="g"
         />
         <NutrientCard
           icon={GiJellyBeans}
           name="단백질"
-          value={200}
-          maxValue={500}
+          value={user.currentProtein}
+          maxValue={user.targetProtein}
           unit="g"
         />
         <NutrientCard
           icon={TbMeat}
           name="지방"
-          value={200}
-          maxValue={500}
+          value={user.currentFat}
+          maxValue={user.targetFat}
           unit="g"
         />
       </SimpleGrid>
-      <Tabs variant="soft-rounded" colorScheme="green" size="sm">
-        <TabList>
-          <Tab>아침</Tab>
-          <Tab>점심</Tab>
-          <Tab>저녁</Tab>
-        </TabList>
-        <TabPanels>
-          <TabPanel paddingLeft={0} paddingRight={0}>
-            <Card variant="outline">
-              <CardBody p={0}>
-                <HStack padding={[0, 4]}>
-                  <AspectRatio ratio={1} width={["35%", "25%"]}>
-                    <Image src={sampleFood} alt="Food" borderRadius={[0, 8]} />
-                  </AspectRatio>
-                  <Center width="65%">
-                    <Stack spacing={[4, 5]}>
-                      <HStack>
-                        <Badge fontSize={["xs", "sm"]}>#샐러드</Badge>
-                      </HStack>
-                      <HStack spacing={[6, 14]}>
-                        <Stack spacing={[2, 3]}>
-                          <Heading size={["sm", "md"]}>섭취 칼로리</Heading>
-                          <Text fontSize={["sm", "lg"]}>200kcal</Text>
-                        </Stack>
-                        <Stack spacing={[2, 3]}>
-                          <Heading size={["sm", "md"]}>영양 균형</Heading>
-                          <Text
-                            fontSize={["sm", "lg"]}
-                            color="green.400"
-                            fontWeight="semibold"
-                          >
-                            좋음
-                          </Text>
-                        </Stack>
-                      </HStack>
-                    </Stack>
-                  </Center>
-                </HStack>
-              </CardBody>
-            </Card>
-          </TabPanel>
-          <TabPanel paddingLeft={0} paddingRight={0}>
-            <Card variant="outline">
-              <CardBody>
-                <Center gap={4} color="gray.400">
-                  <CheckIcon />
-                  <Text>기록된 식사가 없습니다</Text>
-                </Center>
-              </CardBody>
-            </Card>
-          </TabPanel>
-          <TabPanel paddingLeft={0} paddingRight={0}>
-            <Card variant="outline">
-              <CardBody>
-                <Center gap={4} color="gray.400">
-                  <CheckIcon />
-                  <Text>기록된 식사가 없습니다</Text>
-                </Center>
-              </CardBody>
-            </Card>
-          </TabPanel>
-        </TabPanels>
-      </Tabs>
+      <MealTabs
+        breakfast={breakfast}
+        lunch={lunch}
+        dinner={dinner}
+        snack={snack}
+      />
     </Stack>
   );
 
