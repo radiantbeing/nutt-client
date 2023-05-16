@@ -34,6 +34,7 @@ import NavigationBar from "../../components/NavigationBar";
 import { TbMeat } from "react-icons/tb";
 import { useEffect, useState } from "react";
 import { m } from "framer-motion";
+import Meal from "../../interfaces/Meal";
 
 type NutrientCardProps = {
   name: string;
@@ -99,18 +100,6 @@ interface User {
   targetProtein: number;
   currentFat: number;
   targetFat: number;
-}
-
-interface Food {
-  name: string;
-  kcal: number;
-}
-
-interface Meal {
-  time: "아침" | "점심" | "저녁" | "간식";
-  foods: Food[];
-  nutritionRating: "좋음" | "보통" | "나쁨";
-  img: string;
 }
 
 function MealTab({ meals }: { meals?: Meal[] }) {
@@ -251,10 +240,16 @@ export default function Home() {
             {
               name: "샐러드",
               kcal: 200,
+              carbohydrate: 20,
+              protein: 10,
+              fat: 5,
             },
             {
               name: "계란",
               kcal: 40,
+              carbohydrate: 0,
+              protein: 5,
+              fat: 2,
             },
           ],
           img: "https://via.placeholder.com/150",
@@ -268,6 +263,9 @@ export default function Home() {
             {
               name: "라면",
               kcal: 232,
+              carbohydrate: 20,
+              protein: 10,
+              fat: 5,
             },
           ],
           img: "https://via.placeholder.com/150",
@@ -279,6 +277,9 @@ export default function Home() {
             {
               name: "도시락",
               kcal: 329,
+              carbohydrate: 20,
+              protein: 10,
+              fat: 5,
             },
           ],
           img: "https://via.placeholder.com/150",
@@ -292,6 +293,9 @@ export default function Home() {
             {
               name: "햄버거",
               kcal: 600,
+              carbohydrate: 20,
+              protein: 10,
+              fat: 5,
             },
           ],
           img: "https://via.placeholder.com/150",
