@@ -22,6 +22,7 @@ import configureStore from "./store/configureStore";
 import Index from "./pages/Index";
 import { useEffect } from "react";
 import MealRecord from "./pages/MealRecord/MealRecord";
+import Setting from "./pages/Setting/Setting";
 
 function ProtectedRoute(props: { children: any }) {
   const navigate = useNavigate();
@@ -94,6 +95,14 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <MealRecord />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="setting"
+        element={
+          <ProtectedRoute>
+            <Setting />
           </ProtectedRoute>
         }
       />
