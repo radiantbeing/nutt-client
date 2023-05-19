@@ -236,7 +236,8 @@ export default function Home() {
       breakfast: [
         {
           date: "2023-05-17",
-          time: "아침",
+          time: "23:21",
+          mealTime: "아침",
           foods: [
             {
               name: "샐러드",
@@ -260,7 +261,8 @@ export default function Home() {
       lunch: [
         {
           date: "2023-05-17",
-          time: "점심",
+          time: "23:21",
+          mealTime: "점심",
           foods: [
             {
               name: "라면",
@@ -275,7 +277,8 @@ export default function Home() {
         },
         {
           date: "2023-05-17",
-          time: "점심",
+          time: "23:21",
+          mealTime: "점심",
           foods: [
             {
               name: "도시락",
@@ -292,7 +295,8 @@ export default function Home() {
       dinner: [
         {
           date: "2023-05-17",
-          time: "저녁",
+          time: "23:21",
+          mealTime: "저녁",
           foods: [
             {
               name: "햄버거",

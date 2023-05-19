@@ -68,7 +68,27 @@ export function NutrientProgressBar({
   );
 }
 
-export function TargetAchievement() {
+type TargetAchievementProps = {
+  currentKcal: number;
+  targetKcal: number;
+  currentCarbohydrate: number;
+  targetCarbohydrate: number;
+  currentProtein: number;
+  targetProtein: number;
+  currentFat: number;
+  targetFat: number;
+};
+
+export function TargetAchievement({
+  currentKcal,
+  targetKcal,
+  currentCarbohydrate,
+  targetCarbohydrate,
+  currentProtein,
+  targetProtein,
+  currentFat,
+  targetFat,
+}: TargetAchievementProps) {
   return (
     <Stack spacing={3}>
       <ArticleHeading text="목표 영양소 달성량" />
@@ -79,10 +99,26 @@ export function TargetAchievement() {
         borderRadius={8}
         padding={4}
       >
-        <NutrientProgressBar name="칼로리" current={499} target={500} />
-        <NutrientProgressBar name="탄수화물" current={12} target={500} />
-        <NutrientProgressBar name="단백질" current={12} target={500} />
-        <NutrientProgressBar name="지방" current={12} target={500} />
+        <NutrientProgressBar
+          name="칼로리"
+          current={currentKcal}
+          target={targetKcal}
+        />
+        <NutrientProgressBar
+          name="탄수화물"
+          current={currentCarbohydrate}
+          target={targetCarbohydrate}
+        />
+        <NutrientProgressBar
+          name="단백질"
+          current={currentProtein}
+          target={targetProtein}
+        />
+        <NutrientProgressBar
+          name="지방"
+          current={currentFat}
+          target={targetFat}
+        />
       </Stack>
     </Stack>
   );

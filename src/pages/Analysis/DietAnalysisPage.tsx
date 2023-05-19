@@ -77,7 +77,16 @@ export default function DietAnalysisPage() {
           </Stack>
         </RadioGroup>
       </Stack>
-      <TargetAchievement />
+      <TargetAchievement
+        currentKcal={243}
+        targetKcal={1500}
+        currentCarbohydrate={23}
+        targetCarbohydrate={200}
+        currentProtein={50}
+        targetProtein={200}
+        currentFat={79}
+        targetFat={200}
+      />
       <NutrientAnalysisTable
         foods={[
           {
