@@ -34,7 +34,30 @@ import {
   TargetAchievement,
   NutrientAnalysisTable,
 } from "../../components/NutrientAnalysis";
-import Meal from "../../interfaces/Meal";
+import axios from "axios";
+
+interface Food {
+  name: string;
+  kcal: number;
+  carbohydrate: number;
+  protein: number;
+  fat: number;
+}
+
+interface Meal {
+  date: string;
+  time: string;
+  img: string;
+  info: {
+    mealTime: "BREAKFAST" | "LUNCH" | "DINNER" | "SNACK";
+    foods: Food[];
+  };
+}
+
+interface Meals {
+  date: string;
+  mealData: Meal[];
+}
 
 function Loading() {
   return (
@@ -47,7 +70,11 @@ function Loading() {
   );
 }
 
-function LookupButton() {
+function LookupButton({
+  onClick,
+}: {
+  onClick: MouseEventHandler<HTMLButtonElement>;
+}) {
   return (
     <Button
       w="full"
@@ -62,6 +89,7 @@ function LookupButton() {
       _active={{
         bgColor: "green.600",
       }}
+      onClick={onClick}
     >
       조회
     </Button>
@@ -76,11 +104,27 @@ type MealDrawerProps = {
 
 function MealDrawer({ isOpen, onClose, meal }: MealDrawerProps) {
   if (!meal) return null;
-  const { mealTime, time, foods, date, img, nutritionRating } = meal;
+  const { date, time, img, info } = meal;
   const [year, month, day] = date.split("-");
-  const question = `오늘은 ${foods
+  const question = `오늘은 ${info.foods
     .map((food) => food.name)
     .join(", ")}을 먹었어. 영양학적 측면에서 평가해줘.`;
+
+  let mealTime = null;
+  switch (info.mealTime) {
+    case "BREAKFAST":
+      mealTime = "아침";
+      break;
+    case "LUNCH":
+      mealTime = "점심";
+      break;
+    case "DINNER":
+      mealTime = "저녁";
+      break;
+    case "SNACK":
+      mealTime = "간식";
+      break;
+  }
 
   return (
     <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
@@ -104,7 +148,7 @@ function MealDrawer({ isOpen, onClose, meal }: MealDrawerProps) {
               currentFat={79}
               targetFat={200}
             />
-            <NutrientAnalysisTable foods={foods} />
+            <NutrientAnalysisTable foods={info.foods} />
           </Stack>
         </DrawerBody>
       </DrawerContent>
@@ -161,53 +205,6 @@ function DateForm({
   );
 }
 
-function MealGalleryRow({
-  date,
-  meals,
-  onImageClick,
-}: {
-  date: Date;
-  meals: Meal[];
-  onImageClick: (meal: Meal) => void;
-}) {
-  return (
-    <>
-      <Text fontSize="md">
-        {date.getMonth() + 1}월 {date.getDate()}일
-      </Text>
-      <SimpleGrid columns={3} spacing={1}>
-        {meals.map((meal, index) => (
-          <AspectRatio ratio={1}>
-            <Image
-              key={meal.time}
-              src={meal.img}
-              onClick={() => onImageClick(meal)}
-            />
-          </AspectRatio>
-        ))}
-      </SimpleGrid>
-    </>
-  );
-}
-
-function MealGallery({
-  meals,
-  onImageClick,
-}: {
-  meals: Meal[];
-  onImageClick: (meal: Meal) => void;
-}) {
-  return (
-    <Stack>
-      <MealGalleryRow
-        date={new Date("2023-05-17")}
-        meals={meals}
-        onImageClick={onImageClick}
-      />
-    </Stack>
-  );
-}
-
 export default function MealRecord() {
   // Hooks
   const navigation = useNavigate();
@@ -216,71 +213,68 @@ export default function MealRecord() {
   // States
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
-  const [meals, setMeals] = useState<Meal[]>([]);
+  const [meals, setMeals] = useState<Meals | null>(null);
   const [meal, setMeal] = useState<Meal | null>(null);
 
   // Side-effects
   useEffect(() => {
-    const fetchedMeals: Meal[] = [
-      {
-        date: "2023-05-17",
-        time: "12:34",
-        mealTime: "저녁",
-        foods: [
-          {
-            name: "햄버거",
-            kcal: 600,
-            carbohydrate: 20,
-            protein: 10,
-            fat: 5,
-          },
-        ],
-        img: "https://via.placeholder.com/150",
-        nutritionRating: "나쁨",
+    axios({
+      method: "get",
+      url: `${process.env.REACT_APP_NUTT_API_URL}/api/search/date//${year}/${month}`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-      {
-        date: "2023-05-10",
-        time: "05:43",
-        mealTime: "아침",
-        foods: [
-          {
-            name: "피자",
-            kcal: 600,
-            carbohydrate: 20,
-            protein: 10,
-            fat: 5,
+    }).then((res) => console.log(res.data.data));
+    setMeals({
+      date: "2023-05",
+      mealData: [
+        {
+          date: "2023-05-19",
+          time: "11:18",
+          img: "https://via.placeholder.com/150",
+          info: {
+            mealTime: "BREAKFAST",
+            foods: [
+              {
+                name: "깻잎",
+                kcal: 200.0,
+                carbohydrate: 60.0,
+                protein: 30.0,
+                fat: 50.0,
+              },
+            ],
           },
-        ],
-        img: "https://via.placeholder.com/150",
-        nutritionRating: "좋음",
-      },
-      {
-        date: "2023-05-10",
-        time: "02:43",
-        mealTime: "점심",
-        foods: [
-          {
-            name: "샐러드",
-            kcal: 600,
-            carbohydrate: 20,
-            protein: 10,
-            fat: 5,
+        },
+        {
+          date: "2023-05-19",
+          time: "11:28",
+          img: "https://via.placeholder.com/150",
+          info: {
+            mealTime: "LUNCH",
+            foods: [
+              {
+                name: "제육볶음",
+                kcal: 200.0,
+                carbohydrate: 60.0,
+                protein: 30.0,
+                fat: 50.0,
+              },
+              {
+                name: "계란찜",
+                kcal: 200.0,
+                carbohydrate: 60.0,
+                protein: 30.0,
+                fat: 50.0,
+              },
+            ],
           },
-        ],
-        img: "https://via.placeholder.com/150",
-        nutritionRating: "좋음",
-      },
-    ];
-    const sortedMeals: Meal[] = fetchedMeals.sort((a, b) => {
-      const dateA: any = new Date(`${a.date}T${a.time}`);
-      const dateB: any = new Date(`${b.date}T${b.time}`);
-      return dateA - dateB;
+        },
+      ],
     });
-    setMeals(sortedMeals);
   }, []);
 
   // Pre-rendering
-  if (meals.length === 0) {
+  if (meals === null) {
     return <Loading />;
   }
 
@@ -309,7 +303,39 @@ export default function MealRecord() {
     </>
   );
 
-  const footer = <LookupButton />;
+  const footer = (
+    <LookupButton
+      onClick={() => {
+        axios({
+          method: "get",
+          url: `${process.env.REACT_APP_NUTT_API_URL}/api/search/date/${year}/${month}`,
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }).then((res) => setMeals(res.data.data));
+      }}
+    />
+  );
 
   return <TemplateGrid header={header} main={main} footer={footer} />;
+}
+
+function MealGallery({
+  meals,
+  onImageClick,
+}: {
+  meals: Meals;
+  onImageClick: (meal: Meal) => void;
+}) {
+  return (
+    <SimpleGrid columns={3} spacing={1}>
+      {meals.mealData.map((meal) => (
+        <Image
+          key={`${meal.date} ${meal.time}`}
+          src={meal.img}
+          onClick={() => onImageClick(meal)}
+        />
+      ))}
+    </SimpleGrid>
+  );
 }

@@ -217,12 +217,12 @@ export default function Home() {
       name: "홍길동",
       currentKcal: 200,
       targetKcal: 1500,
-      currentCarbohydrate: 200,
-      targetCarbohydrate: 500,
-      currentProtein: 200,
-      targetProtein: 500,
-      currentFat: 200,
-      targetFat: 500,
+      currentCarbohydrate: 20,
+      targetCarbohydrate: 50,
+      currentProtein: 20,
+      targetProtein: 50,
+      currentFat: 20,
+      targetFat: 50,
     });
   }, []);
 

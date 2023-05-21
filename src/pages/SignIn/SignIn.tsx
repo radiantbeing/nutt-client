@@ -91,8 +91,7 @@ export default function SignIn() {
               password,
             }
           );
-          const { data } = response;
-
+          const { data } = response.data;
           const { accessToken }: JWTTokens = data;
           localStorage.setItem("accessToken", accessToken);
           dispatch({ type: "SET_ACCESS_TOKEN", payload: accessToken });

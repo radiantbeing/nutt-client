@@ -44,7 +44,7 @@ const RecommendedIntakeForm: FC<RecommendedIntakeFormProps> = ({
 
   const main = (
     <Stack spacing={6} w="full">
-      <ChatBot message="홍길동님의 신체 정보, 건강 목표 및 활동량을 통해 에너지 섭취량과 영양소 섭취량을 계산합니다." />
+      <ChatBot message="수집한 신체 정보, 건강 목표 및 활동량을 통해 최적의 에너지 섭취량과 영양소 섭취량을 계산했습니다. 계산된 섭취량을 조정하거나 '시작하기'를 터치하세요." />
       <SimpleGrid columns={2} spacing={6}>
         <FormControl>
           <FormLabel>섭취 칼로리 (kcal)</FormLabel>
