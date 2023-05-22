@@ -10,7 +10,6 @@ import {
   PopoverArrow,
   PopoverBody,
   PopoverContent,
-  PopoverHeader,
   PopoverTrigger,
 } from "@chakra-ui/react";
 import { FC } from "react";

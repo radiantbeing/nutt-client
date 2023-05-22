@@ -11,7 +11,6 @@ import {
   Stack,
   Text,
   Image,
-  AspectRatio,
   useDisclosure,
   Drawer,
   DrawerBody,
@@ -22,6 +21,8 @@ import {
   Center,
   Spinner,
   VStack,
+  Badge,
+  Flex,
 } from "@chakra-ui/react";
 import { MouseEventHandler, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
@@ -104,7 +105,7 @@ type MealDrawerProps = {
 
 function MealDrawer({ isOpen, onClose, meal }: MealDrawerProps) {
   if (!meal) return null;
-  const { date, time, img, info } = meal;
+  const { date, img, info } = meal;
   const [year, month, day] = date.split("-");
   const question = `오늘은 ${info.foods
     .map((food) => food.name)
@@ -271,6 +272,7 @@ export default function MealRecord() {
         },
       ],
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Pre-rendering
@@ -328,14 +330,35 @@ function MealGallery({
   onImageClick: (meal: Meal) => void;
 }) {
   return (
-    <SimpleGrid columns={3} spacing={1}>
-      {meals.mealData.map((meal) => (
-        <Image
-          key={`${meal.date} ${meal.time}`}
-          src={meal.img}
-          onClick={() => onImageClick(meal)}
-        />
-      ))}
+    <SimpleGrid columns={3}>
+      {meals.mealData.map((meal) => {
+        let mealTime = null;
+        switch (meal.info.mealTime) {
+          case "BREAKFAST":
+            mealTime = "아침";
+            break;
+          case "LUNCH":
+            mealTime = "점심";
+            break;
+          case "DINNER":
+            mealTime = "저녁";
+            break;
+          case "SNACK":
+            mealTime = "간식";
+            break;
+        }
+
+        const date = new Date(meal.date);
+
+        return (
+          <Flex key={`${meal.date} ${meal.time}`} boxSize={"fit-content"}>
+            <Image src={meal.img} onClick={() => onImageClick(meal)} />
+            <Badge position="absolute">
+              {date.getDate()}일 {mealTime}
+            </Badge>
+          </Flex>
+        );
+      })}
     </SimpleGrid>
   );
 }
