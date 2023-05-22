@@ -128,7 +128,7 @@ function MealDrawer({ isOpen, onClose, meal }: MealDrawerProps) {
   }
 
   return (
-    <Drawer placement="bottom" onClose={onClose} isOpen={isOpen}>
+    <Drawer placement="right" onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay />
       <DrawerContent>
         <DrawerCloseButton />
@@ -286,7 +286,6 @@ export default function MealRecord() {
   const main = (
     <>
       <Stack spacing={4}>
-        <ChatBot message="지금까지 기록한 식단들을 확인해보세요!" />
         <DateForm
           year={year}
           month={month}
@@ -351,8 +350,13 @@ function MealGallery({
         const date = new Date(meal.date);
 
         return (
-          <Flex key={`${meal.date} ${meal.time}`} boxSize={"fit-content"}>
-            <Image src={meal.img} onClick={() => onImageClick(meal)} />
+          <Flex key={`${meal.date} ${meal.time}`}>
+            <Image
+              objectFit="cover"
+              boxSize="full"
+              src={meal.img}
+              onClick={() => onImageClick(meal)}
+            />
             <Badge position="absolute">
               {date.getDate()}일 {mealTime}
             </Badge>
