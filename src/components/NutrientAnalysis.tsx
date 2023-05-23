@@ -18,6 +18,37 @@ import {
 import FoodNutrient from "../interfaces/Food";
 import ArticleHeading from "./ArticleHeading";
 
+function translator(name: string) {
+  const names: any = {
+    Mandu: "만두",
+    KKennip: "깻잎",
+    Jabgokbab: "잡곡밥",
+    Jeyukbokum: "제육볶음",
+    Gimchizzigae: "김치찌개",
+    Samgyupsal: "삼겹살",
+    Duinjangzzigae: "된장찌개",
+    Gamjatang: "감자탕",
+    Ramyun: "라면",
+    Pizza: "피자",
+    Yangnyumchicken: "양념치킨",
+    Friedchicken: "후라이드치킨",
+    BaechuKimchi: "배추김치",
+    Kkakdugi: "깍두기",
+    Bulgogi: "불고기",
+    Godeungeogui: "고등어구이",
+    Zzajangmyun: "짜장면",
+    Zzambbong: "짬뽕",
+    Friedegg: "계란후라이",
+    Gyeranjjim: "계란찜",
+  };
+
+  if (names.hasOwnProperty(name)) {
+    return names[name];
+  } else {
+    return name;
+  }
+}
+
 type ScannedPictureProps = {
   src: string;
 };
@@ -156,7 +187,7 @@ export function NutrientAnalysisTable({ foods }: NutrientAnalysisTableProps) {
         sum.fat += food.fat;
         return (
           <Tr key={food.name}>
-            <Td>{food.name}</Td>
+            <Td>{translator(food.name)}</Td>
             <Td isNumeric>{food.kcal}</Td>
             <Td isNumeric>{food.carbohydrate}</Td>
             <Td isNumeric>{food.protein}</Td>

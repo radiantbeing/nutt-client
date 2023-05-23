@@ -23,6 +23,7 @@ import Index from "./pages/Index";
 import { useEffect } from "react";
 import MealRecord from "./pages/MealRecord/MealRecord";
 import Setting from "./pages/Setting/Setting";
+import PhotoRecognition from "./pages/PhotoRecognition/PhotoRecognition";
 
 function ProtectedRoute(props: { children: any }) {
   const navigate = useNavigate();
@@ -103,6 +104,14 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <Setting />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="photo-recognition"
+        element={
+          <ProtectedRoute>
+            <PhotoRecognition />
           </ProtectedRoute>
         }
       />

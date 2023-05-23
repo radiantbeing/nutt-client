@@ -9,6 +9,8 @@ import {
   Center,
   Text,
 } from "@chakra-ui/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 interface Food {
   name: string;
@@ -75,7 +77,7 @@ function MealGallery({
         const date = new Date(meal.date);
 
         return (
-          <Flex key={`${meal.date} ${meal.time}`}>
+          <Flex>
             <Image
               objectFit="cover"
               boxSize="full"

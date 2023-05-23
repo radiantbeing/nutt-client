@@ -9,6 +9,7 @@ import Meal from "../../interfaces/Meal";
 import NutrientGrid from "./NutrientGrid";
 import Loading from "../../components/Loading";
 import MealTabs from "./MealTabs";
+import axios from "axios";
 
 interface User {
   name: string;
@@ -25,126 +26,109 @@ interface User {
 export default function Home() {
   // States
   const [user, setUser] = useState<User>();
+  const [kcal, setKcal] = useState<number>(0);
+  const [carbohydrate, setCarbohydrate] = useState<number>(0);
+  const [protein, setProtein] = useState<number>(0);
+  const [fat, setFat] = useState<number>(0);
+  const [targetKcal, setTargetKcal] = useState<number>(0);
+  const [targetCarbohydrate, setTargetCarbohydrate] = useState<number>(0);
+  const [targetProtein, setTargetProtein] = useState<number>(0);
+  const [targetFat, setTargetFat] = useState<number>(0);
   const [breakfast, setBreakfast] = useState<Meal[]>();
   const [lunch, setLunch] = useState<Meal[]>();
   const [dinner, setDinner] = useState<Meal[]>();
   const [snack, setSnack] = useState<Meal[]>();
 
   // Side-effects
+
   useEffect(() => {
-    setUser({
-      name: "홍길동",
-      currentKcal: 200,
-      targetKcal: 1500,
-      currentCarbohydrate: 20,
-      targetCarbohydrate: 50,
-      currentProtein: 20,
-      targetProtein: 50,
-      currentFat: 20,
-      targetFat: 50,
+    axios({
+      method: "GET",
+      url: `${process.env.REACT_APP_NUTT_API_URL}/api/search/today-intake`,
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+      },
+    }).then((res) => {
+      const { data } = res.data;
+      console.log(data);
+      const {
+        dailyCarbohydrate,
+        dailyFat,
+        dailyKcal,
+        dailyProtein,
+        intakeCarbohydrateSum,
+        intakeFatSum,
+        intakeKcalSum,
+        intakeProteinSum,
+        mealData,
+      } = data;
+      setKcal(intakeKcalSum);
+      setCarbohydrate(intakeCarbohydrateSum);
+      setProtein(intakeProteinSum);
+      setFat(intakeFatSum);
+      setTargetKcal(dailyKcal);
+      setTargetCarbohydrate(dailyCarbohydrate);
+      setTargetProtein(dailyProtein);
+      setTargetFat(dailyFat);
+
+      let breakfast: any = [];
+      let lunch: any = [];
+      let dinner: any = [];
+      let snack: any = [];
+
+      mealData.forEach((meal: any) => {
+        if (meal.mealTime === "BREAKFAST") breakfast.push(meal);
+        else if (meal.mealTime === "LUNCH") lunch.push(meal);
+        else if (meal.mealTime === "DINNER") dinner.push(meal);
+        else if (meal.mealTime === "SNACK") snack.push(meal);
+      });
+
+      setBreakfast(breakfast);
+      setLunch(lunch);
+      setDinner(dinner);
+      setSnack(snack);
+      console.log(mealData);
     });
   }, []);
 
   useEffect(() => {
-    const data: {
-      breakfast: Meal[];
-      lunch: Meal[];
-      dinner: Meal[];
-      snack: Meal[];
-    } = {
-      breakfast: [
-        {
-          date: "2023-05-17",
-          time: "23:21",
-          mealTime: "아침",
-          foods: [
-            {
-              name: "샐러드",
-              kcal: 200,
-              carbohydrate: 20,
-              protein: 10,
-              fat: 5,
-            },
-            {
-              name: "계란",
-              kcal: 40,
-              carbohydrate: 0,
-              protein: 5,
-              fat: 2,
-            },
-          ],
-          img: "https://via.placeholder.com/150",
-        },
-      ],
-      lunch: [
-        {
-          date: "2023-05-17",
-          time: "23:21",
-          mealTime: "점심",
-          foods: [
-            {
-              name: "라면",
-              kcal: 232,
-              carbohydrate: 20,
-              protein: 10,
-              fat: 5,
-            },
-          ],
-          img: "https://via.placeholder.com/150",
-        },
-        {
-          date: "2023-05-17",
-          time: "23:21",
-          mealTime: "점심",
-          foods: [
-            {
-              name: "도시락",
-              kcal: 329,
-              carbohydrate: 20,
-              protein: 10,
-              fat: 5,
-            },
-          ],
-          img: "https://via.placeholder.com/150",
-        },
-      ],
-      dinner: [
-        {
-          date: "2023-05-17",
-          time: "23:21",
-          mealTime: "저녁",
-          foods: [
-            {
-              name: "햄버거",
-              kcal: 600,
-              carbohydrate: 20,
-              protein: 10,
-              fat: 5,
-            },
-          ],
-          img: "https://via.placeholder.com/150",
-        },
-      ],
-      snack: [],
-    };
-    setBreakfast(data.breakfast);
-    setLunch(data.lunch);
-    setDinner(data.dinner);
-    setSnack(data.snack);
-  }, []);
-
+    setUser({
+      name: "",
+      currentKcal: kcal,
+      targetKcal: targetKcal,
+      currentCarbohydrate: carbohydrate,
+      targetCarbohydrate: targetCarbohydrate,
+      currentProtein: protein,
+      targetProtein: targetProtein,
+      currentFat: fat,
+      targetFat: targetFat,
+    });
+  }, [
+    carbohydrate,
+    fat,
+    kcal,
+    protein,
+    targetCarbohydrate,
+    targetFat,
+    targetKcal,
+    targetProtein,
+  ]);
   // Pre-rendering
   if (!user) {
     return <Loading text="사용자 정보를 가져오는 중" />;
   }
 
   // Components
-  const header = <Header isMoreMenuVisible>안녕하세요, {user.name}님.</Header>;
+  const header = <Header isMoreMenuVisible>안녕하세요.</Header>;
 
   const main = (
     <Stack spacing={4}>
       <ChatBot question="건강한 식단을 위한 팁을 알려줘." />
-      <ArticleHeading text="2023년 03월 23일" />
+      <ArticleHeading
+        text={`${new Date().getFullYear()}년 ${
+          new Date().getMonth() + 1
+        }월 ${new Date().getDate()}일`}
+      />
       <NutrientGrid user={user} />
       <MealTabs
         breakfast={breakfast}
