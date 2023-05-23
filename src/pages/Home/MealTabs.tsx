@@ -1,4 +1,4 @@
-import { CheckIcon } from "@chakra-ui/icons";
+import { TimeIcon } from "@chakra-ui/icons";
 import {
   TabPanel,
   Card,
@@ -24,7 +24,7 @@ function MealTab({ meals }: { meals?: Meal[] }) {
         <Card variant="outline">
           <CardBody>
             <Center gap={4} color="gray.400">
-              <CheckIcon />
+              <TimeIcon />
               <Text>기록된 식사가 없습니다</Text>
             </Center>
           </CardBody>

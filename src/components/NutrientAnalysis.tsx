@@ -14,7 +14,6 @@ import {
   Box,
   Text,
   AspectRatio,
-  TableCaption,
 } from "@chakra-ui/react";
 import FoodNutrient from "../interfaces/Food";
 import ArticleHeading from "./ArticleHeading";
@@ -39,7 +38,11 @@ export function ScannedPicture({ src }: ScannedPictureProps) {
       <ArticleHeading text="인식 결과" />
       <Box border="1px" borderColor="gray.100" borderRadius="lg" padding={2}>
         <AspectRatio ratio={4 / 3}>
-          <Image src={src} borderRadius="lg" />
+          <Image
+            src={src}
+            borderRadius="lg"
+            fallbackSrc="https://via.placeholder.com/150"
+          />
         </AspectRatio>
       </Box>
     </Stack>
