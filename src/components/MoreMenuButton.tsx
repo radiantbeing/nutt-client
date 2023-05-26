@@ -1,4 +1,4 @@
-import { RepeatClockIcon, SettingsIcon } from "@chakra-ui/icons";
+import { RepeatClockIcon } from "@chakra-ui/icons";
 import {
   IconButton,
   Menu,
@@ -36,9 +36,9 @@ const MoreMenuButton: FC<MoreMenuButtonProps> = ({ isMoreMenuVisible }) => {
         >
           식단 기록
         </MenuItem>
-        <MenuItem icon={<SettingsIcon />} onClick={() => navigate("/setting")}>
+        {/* <MenuItem icon={<SettingsIcon />} onClick={() => navigate("/setting")}>
           설정
-        </MenuItem>
+        </MenuItem> */}
         <MenuDivider />
         <MenuItem
           icon={<RiLogoutBoxLine />}

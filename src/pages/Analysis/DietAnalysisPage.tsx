@@ -90,6 +90,7 @@ export default function DietAnalysisPage() {
         setTargetFat(fat + food.fat);
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Pre-rendering

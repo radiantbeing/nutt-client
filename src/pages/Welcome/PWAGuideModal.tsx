@@ -104,21 +104,7 @@ function PWAGuideModal() {
               mr={3}
               onClick={() => {
                 onClose();
-                if (window.matchMedia("(display-mode: standalone)").matches) {
-                  navigate("/signup");
-                } else {
-                  const id = "test-toast";
-                  !toast.isActive(id) &&
-                    toast({
-                      id,
-                      title: "PWA 활성화 필요",
-                      description: "PWA로 Nutt를 실행해주세요.",
-                      position: "top",
-                      status: "warning",
-                      duration: 9000,
-                      isClosable: true,
-                    });
-                }
+                navigate("/signup");
               }}
             >
               완료
