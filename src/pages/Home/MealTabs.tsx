@@ -78,12 +78,15 @@ function MealTab({ meals }: { meals?: Meal[] }) {
                 borderRadius={[0, 8]}
               />
               <Stack spacing={[4, 5]}>
-                <HStack width={28} overflowX="auto">
-                  {meal.foods.map((food, index) => (
-                    <Badge key={index} fontSize={["xs", "sm"]}>
-                      #{translator(food.name)}
-                    </Badge>
-                  ))}
+                <HStack>
+                  {meal.foods.map((food, index) => {
+                    if (index > 1) return null;
+                    return (
+                      <Badge key={index} fontSize={["xs", "sm"]}>
+                        #{translator(food.name)}
+                      </Badge>
+                    );
+                  })}
                 </HStack>
                 <HStack spacing={[6, 14]}>
                   <Stack spacing={[2, 3]}>

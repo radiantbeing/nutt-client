@@ -20,7 +20,7 @@ import {
   TargetAchievement,
   NutrientAnalysisTable,
 } from "../../components/NutrientAnalysis";
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Food from "../../interfaces/Food";
 import { useSelector } from "react-redux";
 import { AppState } from "../../store/Appstate";
@@ -37,7 +37,6 @@ function Loading() {
 }
 
 export default function DietAnalysisPage() {
-  const navigate = useNavigate();
   // States
   const [foods, setFoods] = useState<Food[]>([]);
   const [kcal, setKcal] = useState<number>(0);
@@ -53,10 +52,11 @@ export default function DietAnalysisPage() {
   >("BREAKFAST");
 
   // Hooks
-  const navigation = useNavigate();
   const detectedFoods = useSelector((state: AppState) => state.detectedFoods);
-  console.log("Detected!", detectedFoods);
-  console.log("detectedFoods:", foods);
+  const navigate = useNavigate();
+  const detectingImage = useSelector((state: AppState) => state.detectingImage);
+  console.log("detectingImage!", detectingImage?.image);
+
   // Side-effects
   useEffect(() => {
     axios({
@@ -77,13 +77,13 @@ export default function DietAnalysisPage() {
 
   useEffect(() => {
     let foods: any = [];
-    detectedFoods?.map(async (food) => {
+    detectedFoods?.forEach(async (food) => {
       const { data } = await axios.get(
         `${process.env.REACT_APP_NUTT_API_URL}/api/foodInfo/${food.class}`
       );
       foods.push(data.data);
       setFoods(foods);
-      foods.map((food: any) => {
+      foods.forEach((food: any) => {
         setTargetKcal(kcal + food.kcal);
         setTargetCarbohydrate(carbohydrate + food.carbohydrate);
         setTargetProtein(protein + food.protein);
@@ -101,13 +101,13 @@ export default function DietAnalysisPage() {
 
   // Components
   const header = (
-    <Header onPrevClick={() => navigation("/")}>식단 분석 결과</Header>
+    <Header onPrevClick={() => navigate("/")}>식단 분석 결과</Header>
   );
 
   const main = (
     <Stack spacing={6} w="full">
       <ChatBot question={question} />
-      <ScannedPicture src="https://via.placeholder.com/150" />
+      <ScannedPicture src={detectingImage?.image} />
       <Stack spacing={3}>
         <ArticleHeading text="식사 시간" />
         <RadioGroup
@@ -159,7 +159,7 @@ export default function DietAnalysisPage() {
   const footer = (
     <HStack boxSize="full">
       <NavigateButton
-        onClick={() => navigation("/")}
+        onClick={() => navigate("/")}
         variant="outline"
         colorScheme="red"
       >
@@ -172,17 +172,22 @@ export default function DietAnalysisPage() {
           foods.map((food: any) => {
             axios({
               method: "POST",
-              url: `${process.env.REACT_APP_NUTT_API_URL}/api/record-intake`,
+              // url: `${process.env.REACT_APP_NUTT_API_URL}/api/record-intake`,
+              url: `http://219.255.1.253:8080/api/record-intake`,
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+                "Content-Type": "multipart/form-data",
               },
               data: {
-                intakeTitle: mealTime,
-                foodName: food.name,
-                intakeKcal: food.kcal,
-                intakeCarbohydrate: food.carbohydrate,
-                intakeProtein: food.protein,
-                intakeFat: food.fat,
+                request: {
+                  intakeTitle: mealTime,
+                  foodName: food.name,
+                  intakeKcal: food.kcal,
+                  intakeCarbohydrate: food.carbohydrate,
+                  intakeProtein: food.protein,
+                  intakeFat: food.fat,
+                },
+                imageFile: detectingImage?.image,
               },
             });
             navigate("/");

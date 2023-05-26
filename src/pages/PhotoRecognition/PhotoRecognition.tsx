@@ -5,10 +5,14 @@ import FileInput from "./FileInput";
 import Header from "../../components/Header";
 import NavigationBar from "../../components/NavigationBar";
 import TemplateGrid from "../../layouts/TemplateGrid";
+import { useNavigate } from "react-router-dom";
 
 const PhotoRecognition: FC = () => {
+  const navigate = useNavigate();
   // Components
-  const header = <Header isMoreMenuVisible>사진 인식 모드</Header>;
+  const header = (
+    <Header onPrevClick={() => navigate("/")}>사진 인식 모드</Header>
+  );
 
   const main = (
     <Stack spacing={4} height="full">

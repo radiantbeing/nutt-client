@@ -1,5 +1,5 @@
 import { Flex } from "@chakra-ui/react";
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import Header from "../../components/Header";
 import TemplateGrid from "../../layouts/TemplateGrid";
 import NavigationBar from "../../components/NavigationBar";

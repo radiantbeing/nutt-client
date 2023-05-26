@@ -14,17 +14,16 @@ import {
 import axios from "axios";
 import { useRef, useState } from "react";
 import { MdOutlineFileUpload } from "react-icons/md";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AppState } from "../../store/Appstate";
 import { DETECTED_FOODS } from "../../store/reducers/DetectedFoodsReducer";
+import { DETECTING_IMAGE } from "../../store/reducers/DetectingImage";
 
 export default function FileInput() {
   const dispatch = useDispatch();
   const [imgFile, setImgFile] = useState<null | string | ArrayBuffer>("");
   const imgRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
-  const detectedFoods = useSelector((state: AppState) => state.detectedFoods);
 
   // 이미지 업로드 input의 onChange
   const saveImgFile = () => {
@@ -90,6 +89,11 @@ export default function FileInput() {
         onClick={() => {
           const formData = new FormData();
           formData.append("image", imgFile as string);
+
+          dispatch({
+            type: DETECTING_IMAGE,
+            payload: { image: imgFile as string },
+          });
 
           axios({
             method: "post",
