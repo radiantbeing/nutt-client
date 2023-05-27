@@ -50,7 +50,6 @@ const useChatGPT = () => {
     };
 
     try {
-      console.log(config);
       const { data } = await axios(config);
       const responseMsg = data.choices[0].message.content;
       setContext([
@@ -58,22 +57,14 @@ const useChatGPT = () => {
         { role: "user", content: question },
         { role: "assistant", content: responseMsg },
       ]);
-      return responseMsg;
+      return { answer: responseMsg, success: true };
     } catch (error) {
       console.error(error);
-      const id = "chat-gpt-error-toast";
-      if (!toast.isActive(id)) {
-        toast({
-          id,
-          position: "top",
-          title: "ChatGPT API 호출에 실패했습니다.",
-          description: "잠시 후 다시 시도해주세요.",
-          status: "error",
-          duration: 2500,
-          isClosable: true,
-        });
-      }
-      return "ChatGPT API 호출에 실패했습니다.";
+
+      return {
+        answer: `ChatGPT API 호출에 실패했습니다. ChatGPT 유료 구독자가 아닌 경우 분당 질문 요청 수는 3회입니다.`,
+        success: false,
+      };
     }
   };
 
