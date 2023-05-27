@@ -1,4 +1,4 @@
-import { Flex } from "@chakra-ui/react";
+import { Flex, useToast } from "@chakra-ui/react";
 import { FC, useState } from "react";
 import Header from "../../components/Header";
 import TemplateGrid from "../../layouts/TemplateGrid";
@@ -17,6 +17,7 @@ const Chat: FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
+  const toast = useToast();
   const { callChatGPT, context } = useChatGPT();
 
   const onMessageSubmit = async (
@@ -27,7 +28,18 @@ const Chat: FC = () => {
     if (message.content === "") return;
 
     setIsLoading(true);
-    await callChatGPT(message.content);
+    const { success } = await callChatGPT(message.content);
+    if (!success && !toast.isActive("chat-error")) {
+      toast({
+        id: "chat-error",
+        title: "챗봇에 문제가 발생했습니다.",
+        description: "잠시 후 다시 시도해주세요.",
+        status: "error",
+        duration: 3000,
+        position: "top",
+      });
+    }
+
     setMessage({ role: "user", content: "" });
     setIsLoading(false);
   };

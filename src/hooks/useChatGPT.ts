@@ -1,12 +1,9 @@
-import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
 import Message from "../interfaces/Message";
 
 const useChatGPT = () => {
   const [context, setContext] = useState<Message[]>([]);
-
-  const toast = useToast();
 
   const initMsg: Message = {
     role: "system",
@@ -50,6 +47,9 @@ const useChatGPT = () => {
     };
 
     try {
+      console.group("Call ChatGPT API");
+      console.log("context", config.data.messages);
+      console.groupEnd();
       const { data } = await axios(config);
       const responseMsg = data.choices[0].message.content;
       setContext([
@@ -62,7 +62,7 @@ const useChatGPT = () => {
       console.error(error);
 
       return {
-        answer: `ChatGPT API 호출에 실패했습니다. ChatGPT 유료 구독자가 아닌 경우 분당 질문 요청 수는 3회입니다.`,
+        answer: `챗봇에 문제가 발생했습니다. 잠시 후 다시 시도해주세요.`,
         success: false,
       };
     }
