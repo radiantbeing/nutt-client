@@ -9,6 +9,7 @@ import {
   Center,
   Text,
 } from "@chakra-ui/react";
+import { nanoid } from "nanoid";
 
 interface Food {
   name: string;
@@ -75,7 +76,7 @@ function MealGallery({
         const date = new Date(meal.date);
 
         return (
-          <Flex>
+          <Flex key={nanoid()}>
             <Image
               objectFit="cover"
               boxSize="full"

@@ -70,14 +70,13 @@ function MealTab({ meals }: { meals?: Meal[] }) {
           <CardBody p={0}>
             <HStack spacing={7}>
               <Image
-                src={meal.img}
+                src={meal.img || "https://via.placeholder.com/150"}
                 alt="Food"
                 width="50%"
                 height="120px"
                 objectFit="cover"
-                borderRadius={[0, 8]}
               />
-              <Stack spacing={[4, 5]}>
+              <Stack spacing={4}>
                 <HStack>
                   {meal.foods.map((food, index) => {
                     if (index > 1) return null;
@@ -88,20 +87,17 @@ function MealTab({ meals }: { meals?: Meal[] }) {
                     );
                   })}
                 </HStack>
-                <HStack spacing={[6, 14]}>
-                  <Stack spacing={[2, 3]}>
-                    <Heading size={["sm", "md"]}>섭취 칼로리</Heading>
-                    <Text fontSize={["sm", "lg"]}>
-                      {meal.foods.reduce(
-                        (accumulator, currentValue) =>
-                          accumulator + currentValue.kcal,
-                        0
-                      )}
-                      kcal
-                    </Text>
-                  </Stack>
-                  <Stack spacing={[2, 3]}></Stack>
-                </HStack>
+                <Stack direction={["column", "row"]} spacing={[2, 3]}>
+                  <Heading size={["sm", "md"]}>섭취 칼로리</Heading>
+                  <Text fontSize={["sm", "md"]}>
+                    {meal.foods.reduce(
+                      (accumulator, currentValue) =>
+                        accumulator + currentValue.kcal,
+                      0
+                    )}
+                    kcal
+                  </Text>
+                </Stack>
               </Stack>
             </HStack>
           </CardBody>

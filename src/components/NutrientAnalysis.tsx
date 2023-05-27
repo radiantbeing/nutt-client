@@ -15,6 +15,7 @@ import {
   Text,
   AspectRatio,
 } from "@chakra-ui/react";
+import { nanoid } from "nanoid";
 import FoodNutrient from "../interfaces/Food";
 import ArticleHeading from "./ArticleHeading";
 
@@ -186,7 +187,7 @@ export function NutrientAnalysisTable({ foods }: NutrientAnalysisTableProps) {
         sum.protein += food.protein;
         sum.fat += food.fat;
         return (
-          <Tr key={food.name}>
+          <Tr key={nanoid()}>
             <Td>{translator(food.name)}</Td>
             <Td isNumeric>{food.kcal}</Td>
             <Td isNumeric>{food.carbohydrate}</Td>

@@ -76,12 +76,13 @@ export default function Home() {
       let dinner: any = [];
       let snack: any = [];
 
-      mealData.forEach((meal: any) => {
-        if (meal.mealTime === "BREAKFAST") breakfast.push(meal);
-        else if (meal.mealTime === "LUNCH") lunch.push(meal);
-        else if (meal.mealTime === "DINNER") dinner.push(meal);
-        else if (meal.mealTime === "SNACK") snack.push(meal);
-      });
+      mealData &&
+        mealData.forEach((meal: any) => {
+          if (meal.mealTime === "BREAKFAST") breakfast.push(meal);
+          else if (meal.mealTime === "LUNCH") lunch.push(meal);
+          else if (meal.mealTime === "DINNER") dinner.push(meal);
+          else if (meal.mealTime === "SNACK") snack.push(meal);
+        });
 
       setBreakfast(breakfast);
       setLunch(lunch);
