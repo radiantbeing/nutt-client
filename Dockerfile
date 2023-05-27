@@ -1,5 +1,9 @@
-FROM httpd:2.4
+FROM node:20.2.0-bullseye
 
-LABEL maintainer="Inhwa Kim <radiantbeing99@gmail.com"
+COPY ./build /build
 
-COPY ./build/ /usr/local/apache2/htdocs/
+RUN npm install -g serve
+
+EXPOSE 3000
+
+ENTRYPOINT ["serve", "-s", "/build"]
