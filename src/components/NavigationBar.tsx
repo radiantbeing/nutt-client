@@ -23,9 +23,15 @@ type ShootModeOptionProps = {
   icon: FC;
   text: string;
   to: string;
+  isDisabled?: boolean;
 };
 
-const ShootModeOption: FC<ShootModeOptionProps> = ({ icon, text, to }) => {
+const ShootModeOption: FC<ShootModeOptionProps> = ({
+  icon,
+  text,
+  to,
+  isDisabled,
+}) => {
   return (
     <LinkBox
       width="full"
@@ -39,9 +45,17 @@ const ShootModeOption: FC<ShootModeOptionProps> = ({ icon, text, to }) => {
       _active={{ backgroundColor: "gray.200" }}
       justifyContent="center"
       fontWeight="medium"
+      cursor={isDisabled ? "not-allowed" : "pointer"}
+      onClick={isDisabled ? (e) => e.preventDefault() : undefined}
     >
-      <Icon as={icon} boxSize={6} color="green.500" />
-      <Text display="inline">{text}</Text>
+      <Icon
+        as={icon}
+        boxSize={6}
+        color={isDisabled ? "gray.300" : "green.500"}
+      />
+      <Text display="inline" color={isDisabled ? "gray.300" : "black"}>
+        {text}
+      </Text>
     </LinkBox>
   );
 };
@@ -79,6 +93,7 @@ const ShootModePopover: FC = () => {
               icon={TbPhotoSensor2}
               text="실시간 인식 모드"
               to="/realtime-recognition"
+              isDisabled
             />
             <ShootModeOption
               icon={MdOutlinePhotoCamera}
