@@ -68,10 +68,10 @@ export default function DietAnalysisPage() {
     }).then((res) => {
       const { data } = res.data;
       const { dailyKcal, dailyCarbohydrate, dailyProtein, dailyFat } = data;
-      setKcal(dailyKcal);
-      setCarbohydrate(dailyCarbohydrate);
-      setProtein(dailyProtein);
-      setFat(dailyFat);
+      setTargetKcal(dailyKcal);
+      setTargetCarbohydrate(dailyCarbohydrate);
+      setTargetProtein(dailyProtein);
+      setTargetFat(dailyFat);
     });
   }, []);
 
@@ -84,10 +84,10 @@ export default function DietAnalysisPage() {
       foods.push(data.data);
       setFoods(foods);
       foods.forEach((food: any) => {
-        setTargetKcal(kcal + food.kcal);
-        setTargetCarbohydrate(carbohydrate + food.carbohydrate);
-        setTargetProtein(protein + food.protein);
-        setTargetFat(fat + food.fat);
+        setKcal(kcal + food.kcal);
+        setCarbohydrate(carbohydrate + food.carbohydrate);
+        setProtein(protein + food.protein);
+        setFat(fat + food.fat);
       });
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -173,8 +173,7 @@ export default function DietAnalysisPage() {
           foods.map((food: any) => {
             axios({
               method: "POST",
-              // url: `${process.env.REACT_APP_NUTT_API_URL}/api/record-intake`,
-              url: `http://219.255.1.253:8080/api/record-intake`,
+              url: `${process.env.REACT_APP_NUTT_API_URL}/api/record-intake`,
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
                 "Content-Type": "multipart/form-data",

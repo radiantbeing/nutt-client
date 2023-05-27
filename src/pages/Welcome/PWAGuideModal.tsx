@@ -7,7 +7,6 @@ import {
   OrderedList,
   ListItem,
   Icon,
-  useToast,
   useDisclosure,
   Modal,
   ModalOverlay,
@@ -76,7 +75,6 @@ function PWAGuideAccordion() {
 
 function PWAGuideModal() {
   const navigate = useNavigate();
-  const toast = useToast();
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
