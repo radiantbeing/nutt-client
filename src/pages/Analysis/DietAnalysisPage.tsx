@@ -6,6 +6,7 @@ import {
   Spinner,
   Stack,
   Text,
+  useToast,
   VStack,
 } from "@chakra-ui/react";
 import Header from "../../components/Header";
@@ -36,6 +37,37 @@ function Loading() {
   );
 }
 
+function translator(name: string) {
+  const names: any = {
+    Mandu: "만두",
+    KKennip: "깻잎",
+    Jabgokbab: "잡곡밥",
+    Jeyukbokum: "제육볶음",
+    Gimchizzigae: "김치찌개",
+    Samgyupsal: "삼겹살",
+    Duinjangzzigae: "된장찌개",
+    Gamjatang: "감자탕",
+    Ramyun: "라면",
+    Pizza: "피자",
+    Yangnyumchicken: "양념치킨",
+    Friedchicken: "후라이드치킨",
+    BaechuKimchi: "배추김치",
+    Kkakdugi: "깍두기",
+    Bulgogi: "불고기",
+    Godeungeogui: "고등어구이",
+    Zzajangmyun: "짜장면",
+    Zzambbong: "짬뽕",
+    Friedegg: "계란후라이",
+    Gyeranjjim: "계란찜",
+  };
+
+  if (names.hasOwnProperty(name)) {
+    return names[name];
+  } else {
+    return name;
+  }
+}
+
 export default function DietAnalysisPage() {
   // States
   const [foods, setFoods] = useState<Food[]>([]);
@@ -54,6 +86,7 @@ export default function DietAnalysisPage() {
   // Hooks
   const detectedFoods = useSelector((state: AppState) => state.detectedFoods);
   const navigate = useNavigate();
+  const toast = useToast();
   const detectingImage = useSelector((state: AppState) => state.detectingImage);
   console.log("detectingImage!", detectingImage?.image);
 
@@ -97,7 +130,7 @@ export default function DietAnalysisPage() {
   if (foods.length === 0) return <Loading />;
 
   const question = `오늘은 ${foods
-    .map((food) => food.name)
+    .map((food) => translator(food.name))
     .join(", ")}을 먹었어. 영양학적 측면에서 평가해줘.`;
 
   // Components
@@ -171,27 +204,42 @@ export default function DietAnalysisPage() {
           console.log("postData:", foods);
           // eslint-disable-next-line array-callback-return
           foods.map((food: any) => {
-            axios({
-              method: "POST",
-              url: `${process.env.REACT_APP_NUTT_API_URL}/api/record-intake`,
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                "Content-Type": "multipart/form-data",
-              },
-              data: {
-                request: {
+            try {
+              axios({
+                method: "POST",
+                url: `${process.env.REACT_APP_NUTT_API_URL}/api/record-intake`,
+                headers: {
+                  Authorization: `Bearer ${localStorage.getItem(
+                    "accessToken"
+                  )}`,
+                  "Content-Type": "application/json",
+                },
+                data: {
                   intakeTitle: mealTime,
                   foodName: food.name,
                   intakeKcal: food.kcal,
                   intakeCarbohydrate: food.carbohydrate,
                   intakeProtein: food.protein,
                   intakeFat: food.fat,
+                  image: detectingImage?.image,
                 },
-                imageFile: detectingImage?.image,
-              },
-            });
-            navigate("/");
+              });
+            } catch (e) {
+              if (!toast.isActive("food-upload-failed")) {
+                toast({
+                  id: "food-upload-failed",
+                  title: "식단 기록에 실패했습니다.",
+                  description: "잠시 후 다시 시도해주세요.",
+                  status: "error",
+                  duration: 3000,
+                  isClosable: true,
+                  position: "top",
+                });
+              }
+            }
           });
+
+          setTimeout(() => navigate("/"), 1000);
         }}
       >
         기록하기

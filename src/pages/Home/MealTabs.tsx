@@ -73,7 +73,7 @@ function MealTab({ meals }: { meals?: Meal[] }) {
                 src={meal.img || "https://via.placeholder.com/150"}
                 alt="Food"
                 width="50%"
-                height="120px"
+                height={["120px", "150px"]}
                 objectFit="cover"
               />
               <Stack spacing={4}>

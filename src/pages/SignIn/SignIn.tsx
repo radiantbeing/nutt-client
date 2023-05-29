@@ -2,9 +2,7 @@ import {
   FormControl,
   FormLabel,
   Input,
-  FormHelperText,
   Stack,
-  Link,
   useToast,
   InputGroup,
   Button,
@@ -64,7 +62,7 @@ export default function SignIn() {
             </Button>
           </InputRightElement>
         </InputGroup>
-        <FormHelperText>
+        {/* <FormHelperText>
           비밀번호를 잊으셨나요?{" "}
           <Link
             href="/reset/password"
@@ -73,7 +71,7 @@ export default function SignIn() {
           >
             비밀번호 찾기
           </Link>
-        </FormHelperText>
+        </FormHelperText> */}
       </FormControl>
     </Stack>
   );

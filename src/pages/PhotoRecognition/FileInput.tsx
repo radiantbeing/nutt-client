@@ -10,6 +10,7 @@ import {
   Center,
   Spinner,
   VStack,
+  useToast,
 } from "@chakra-ui/react";
 import axios from "axios";
 import { useRef, useState } from "react";
@@ -24,6 +25,7 @@ export default function FileInput() {
   const [imgFile, setImgFile] = useState<null | string | ArrayBuffer>("");
   const imgRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
+  const toast = useToast();
 
   // 이미지 업로드 input의 onChange
   const saveImgFile = () => {
@@ -106,6 +108,20 @@ export default function FileInput() {
             },
           }).then((res) => {
             const { data } = res;
+            if (data.length === 0) {
+              if (!toast.isActive("no-foods-detected")) {
+                toast({
+                  id: "no-foods-detected",
+                  title: "식단을 인식하지 못했습니다",
+                  description: "재촬영 후 다시 시도해주세요",
+                  status: "error",
+                  duration: 3000,
+                  isClosable: true,
+                  position: "top",
+                });
+              }
+              return;
+            }
             dispatch({
               type: DETECTED_FOODS,
               payload: data,

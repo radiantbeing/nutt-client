@@ -1,6 +1,5 @@
 import { TimeIcon } from "@chakra-ui/icons";
 import {
-  SimpleGrid,
   Flex,
   Badge,
   Image,
@@ -8,6 +7,7 @@ import {
   CardBody,
   Center,
   Text,
+  Grid,
 } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
 
@@ -55,7 +55,7 @@ function MealGallery({
   }
 
   return (
-    <SimpleGrid columns={3}>
+    <Grid templateColumns="repeat(3, 1fr)" gridAutoRows="1fr">
       {meals.mealData.map((meal) => {
         let mealTime = null;
         switch (meal.info.mealTime) {
@@ -91,7 +91,7 @@ function MealGallery({
           </Flex>
         );
       })}
-    </SimpleGrid>
+    </Grid>
   );
 }
 
