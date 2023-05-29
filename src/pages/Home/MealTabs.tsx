@@ -66,7 +66,7 @@ function MealTab({ meals }: { meals?: Meal[] }) {
   return (
     <TabPanel paddingLeft={0} paddingRight={0}>
       {meals.map((meal, index) => (
-        <Card key={index} variant="outline" marginBottom={2}>
+        <Card key={index} variant="outline" marginBottom={2} overflow="hidden">
           <CardBody p={0}>
             <HStack spacing={7}>
               <Image
