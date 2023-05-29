@@ -39,8 +39,8 @@ function NutrientCard(props: NutrientCardProps) {
   return (
     <Box
       w="full"
-      bgGradient={props.bgGradient}
-      color={props.color}
+      // bgGradient={props.bgGradient}
+      color="black"
       paddingTop={4}
       paddingBottom={4}
       paddingStart={4}
@@ -50,11 +50,7 @@ function NutrientCard(props: NutrientCardProps) {
     >
       <Stack spacing={3}>
         <HStack>
-          <Icon
-            as={props.icon}
-            boxSize={5}
-            color={props.bgGradient ? "white" : "green.500"}
-          />
+          <Icon as={props.icon} boxSize={5} color="green.500" />
           <Heading size="sm">{props.name}</Heading>
         </HStack>
         <Text as="span" fontWeight="semibold">

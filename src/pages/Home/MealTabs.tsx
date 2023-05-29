@@ -87,8 +87,12 @@ function MealTab({ meals }: { meals?: Meal[] }) {
                     );
                   })}
                 </HStack>
-                <Stack direction={["column", "row"]} spacing={[2, 3]}>
-                  <Heading size={["sm", "md"]}>섭취 칼로리</Heading>
+                <Stack
+                  direction={["column", "row"]}
+                  spacing={[2, 3]}
+                  align={["start", "center"]}
+                >
+                  <Heading size={["sm"]}>섭취 칼로리</Heading>
                   <Text fontSize={["sm", "md"]}>
                     {meal.foods.reduce(
                       (accumulator, currentValue) =>
