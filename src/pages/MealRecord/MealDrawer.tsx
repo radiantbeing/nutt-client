@@ -7,12 +7,9 @@ import {
   DrawerBody,
   Stack,
 } from "@chakra-ui/react";
-import axios from "axios";
-import { useState, useEffect } from "react";
 import ChatBot from "../../components/ChatBot";
 import {
   ScannedPicture,
-  TargetAchievement,
   NutrientAnalysisTable,
 } from "../../components/NutrientAnalysis";
 
@@ -72,46 +69,6 @@ type MealDrawerProps = {
 };
 
 function MealDrawer({ isOpen, onClose, meal }: MealDrawerProps) {
-  // const [kcal, setKcal] = useState<number>(0);
-  // const [carbohydrate, setCarbohydrate] = useState<number>(0);
-  // const [protein, setProtein] = useState<number>(0);
-  // const [fat, setFat] = useState<number>(0);
-  // const [targetKcal, setTargetKcal] = useState<number>(0);
-  // const [targetCarbohydrate, setTargetCarbohydrate] = useState<number>(0);
-  // const [targetProtein, setTargetProtein] = useState<number>(0);
-  // const [targetFat, setTargetFat] = useState<number>(0);
-
-  // useEffect(() => {
-  //   axios({
-  //     method: "GET",
-  //     url: `${process.env.REACT_APP_NUTT_API_URL}/api/search/today-intake`,
-  //     headers: {
-  //       Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-  //     },
-  //   }).then((res) => {
-  //     const { data } = res.data;
-  //     console.log(data);
-  // const {
-  //   dailyKcal,
-  //   dailyCarbohydrate,
-  //   dailyProtein,
-  //   dailyFat,
-  //   intakeKcalSum,
-  //   intakeFatSum,
-  //   intakeCarbohydrateSum,
-  //   intakeProteinSum,
-  // } = data;
-  // setKcal(dailyKcal);
-  // setCarbohydrate(dailyCarbohydrate);
-  // setProtein(dailyProtein);
-  // setFat(dailyFat);
-  // setTargetKcal(intakeKcalSum);
-  // setTargetCarbohydrate(intakeCarbohydrateSum);
-  // setTargetProtein(intakeProteinSum);
-  // setTargetFat(intakeFatSum);
-  //   });
-  // }, []);
-
   if (!meal) return null;
 
   const { date, img, info } = meal;
@@ -153,16 +110,7 @@ function MealDrawer({ isOpen, onClose, meal }: MealDrawerProps) {
           <Stack spacing={6} w="full" paddingTop={4} paddingBottom={4}>
             <ChatBot question={question} />
             <ScannedPicture src={img} />
-            {/* <TargetAchievement
-              currentKcal={kcal}
-              targetKcal={targetKcal}
-              currentCarbohydrate={carbohydrate}
-              targetCarbohydrate={targetCarbohydrate}
-              currentProtein={protein}
-              targetProtein={targetProtein}
-              currentFat={fat}
-              targetFat={targetFat}
-            /> */}
+
             <NutrientAnalysisTable foods={info.foods} />
           </Stack>
         </DrawerBody>

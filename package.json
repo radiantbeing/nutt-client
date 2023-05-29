@@ -1,5 +1,5 @@
 {
-  "name": "nutt",
+  "name": "nutt-client",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
