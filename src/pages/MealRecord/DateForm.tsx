@@ -42,7 +42,7 @@ function DateForm({
         <FormLabel>월</FormLabel>
         <NumberInput
           min={1}
-          max={12}
+          max={new Date().getMonth() + 1}
           value={month}
           allowMouseWheel
           onChange={onMonthChange}
