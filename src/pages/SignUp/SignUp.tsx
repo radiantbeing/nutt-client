@@ -273,7 +273,7 @@ export default function SignUp() {
                 }
               );
               console.log(loginResponse.data);
-              const { accessToken }: JWTTokens = loginResponse.data;
+              const { accessToken }: JWTTokens = loginResponse.data.data;
               localStorage.setItem("accessToken", accessToken);
               navigate("/");
             } catch (error) {

@@ -1,4 +1,4 @@
-import { Stack } from "@chakra-ui/react";
+import { Stack, useToast } from "@chakra-ui/react";
 import ChatBot from "../../components/ChatBot";
 import Header from "../../components/Header";
 import TemplateGrid from "../../layouts/TemplateGrid";
@@ -10,6 +10,7 @@ import NutrientGrid from "./NutrientGrid";
 import Loading from "../../components/Loading";
 import MealTabs from "./MealTabs";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 interface User {
   name: string;
@@ -39,6 +40,8 @@ export default function Home() {
   const [dinner, setDinner] = useState<Meal[]>();
   const [snack, setSnack] = useState<Meal[]>();
 
+  const toast = useToast();
+  const navigate = useNavigate();
   // Side-effects
 
   useEffect(() => {
@@ -48,48 +51,63 @@ export default function Home() {
       headers: {
         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
-    }).then((res) => {
-      const { data } = res.data;
-      console.log(data);
-      const {
-        dailyCarbohydrate,
-        dailyFat,
-        dailyKcal,
-        dailyProtein,
-        intakeCarbohydrateSum,
-        intakeFatSum,
-        intakeKcalSum,
-        intakeProteinSum,
-        mealData,
-      } = data;
-      setKcal(intakeKcalSum);
-      setCarbohydrate(intakeCarbohydrateSum);
-      setProtein(intakeProteinSum);
-      setFat(intakeFatSum);
-      setTargetKcal(dailyKcal);
-      setTargetCarbohydrate(dailyCarbohydrate);
-      setTargetProtein(dailyProtein);
-      setTargetFat(dailyFat);
+    })
+      .then((res) => {
+        const { data } = res.data;
+        console.log(data);
+        const {
+          dailyCarbohydrate,
+          dailyFat,
+          dailyKcal,
+          dailyProtein,
+          intakeCarbohydrateSum,
+          intakeFatSum,
+          intakeKcalSum,
+          intakeProteinSum,
+          mealData,
+        } = data;
+        setKcal(intakeKcalSum);
+        setCarbohydrate(intakeCarbohydrateSum);
+        setProtein(intakeProteinSum);
+        setFat(intakeFatSum);
+        setTargetKcal(dailyKcal);
+        setTargetCarbohydrate(dailyCarbohydrate);
+        setTargetProtein(dailyProtein);
+        setTargetFat(dailyFat);
 
-      let breakfast: any = [];
-      let lunch: any = [];
-      let dinner: any = [];
-      let snack: any = [];
+        let breakfast: any = [];
+        let lunch: any = [];
+        let dinner: any = [];
+        let snack: any = [];
 
-      mealData &&
-        mealData.forEach((meal: any) => {
-          if (meal.mealTime === "BREAKFAST") breakfast.push(meal);
-          else if (meal.mealTime === "LUNCH") lunch.push(meal);
-          else if (meal.mealTime === "DINNER") dinner.push(meal);
-          else if (meal.mealTime === "SNACK") snack.push(meal);
-        });
+        mealData &&
+          mealData.forEach((meal: any) => {
+            if (meal.mealTime === "BREAKFAST") breakfast.push(meal);
+            else if (meal.mealTime === "LUNCH") lunch.push(meal);
+            else if (meal.mealTime === "DINNER") dinner.push(meal);
+            else if (meal.mealTime === "SNACK") snack.push(meal);
+          });
 
-      setBreakfast(breakfast);
-      setLunch(lunch);
-      setDinner(dinner);
-      setSnack(snack);
-      console.log(mealData);
-    });
+        setBreakfast(breakfast);
+        setLunch(lunch);
+        setDinner(dinner);
+        setSnack(snack);
+        console.log(mealData);
+      })
+      .catch((error) => {
+        if (error.code === "ERR_NETWORK") {
+          toast({
+            title: "인증 토큰 만료",
+            description: "다시 로그인 해주세요.",
+            status: "error",
+            duration: 3000,
+            isClosable: true,
+            position: "top",
+          });
+          localStorage.removeItem("accessToken");
+          navigate("/signup");
+        }
+      });
   }, []);
 
   useEffect(() => {
