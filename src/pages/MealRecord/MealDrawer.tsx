@@ -98,7 +98,7 @@ function MealDrawer({ isOpen, onClose, meal }: MealDrawerProps) {
       placement="right"
       onClose={onClose}
       isOpen={isOpen}
-      size={["xs", "md"]}
+      size={["xs", "sm"]}
     >
       <DrawerOverlay />
       <DrawerContent>
