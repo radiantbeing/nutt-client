@@ -67,7 +67,7 @@ type NutrientAnalysisTableProps = {
 export function ScannedPicture({ src }: ScannedPictureProps) {
   return (
     <Stack spacing={3}>
-      <ArticleHeading text="인식 결과" />
+      <ArticleHeading text="식단 사진" />
       <Box border="1px" borderColor="gray.100" borderRadius="lg" padding={2}>
         <AspectRatio ratio={4 / 3}>
           <Image

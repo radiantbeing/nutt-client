@@ -162,9 +162,9 @@ export default function DietAnalysisPage() {
       <NavigateButton
         onClick={() => navigate("/")}
         variant="outline"
-        colorScheme="red"
+        colorScheme="gray"
       >
-        기록 취소
+        취소
       </NavigateButton>
       <NavigateButton
         onClick={() => {
