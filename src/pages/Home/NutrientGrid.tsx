@@ -70,8 +70,8 @@ function NutrientGrid({ user }: { user: User }) {
       <NutrientCard
         icon={BsFire}
         name="열량"
-        value={user.currentKcal}
-        maxValue={user.targetKcal}
+        value={Math.round(user.currentKcal)}
+        maxValue={Math.round(user.targetKcal)}
         unit="kcal"
         bgGradient={"linear(to-r, green.400, green.500)"}
         color="white"
@@ -79,22 +79,22 @@ function NutrientGrid({ user }: { user: User }) {
       <NutrientCard
         icon={BiBowlRice}
         name="탄수화물"
-        value={user.currentCarbohydrate}
-        maxValue={user.targetCarbohydrate}
+        value={Math.round(user.currentCarbohydrate)}
+        maxValue={Math.round(user.targetCarbohydrate)}
         unit="g"
       />
       <NutrientCard
         icon={GiJellyBeans}
         name="단백질"
-        value={user.currentProtein}
-        maxValue={user.targetProtein}
+        value={Math.round(user.currentProtein)}
+        maxValue={Math.round(user.targetProtein)}
         unit="g"
       />
       <NutrientCard
         icon={TbMeat}
         name="지방"
-        value={user.currentFat}
-        maxValue={user.targetFat}
+        value={Math.round(user.currentFat)}
+        maxValue={Math.round(user.targetFat)}
         unit="g"
       />
     </SimpleGrid>

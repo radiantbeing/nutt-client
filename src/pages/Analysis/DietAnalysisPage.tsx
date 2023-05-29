@@ -139,6 +139,7 @@ export default function DietAnalysisPage() {
         setFat(Math.round(sumFat * 1e2) / 1e2);
       });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

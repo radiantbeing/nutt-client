@@ -92,8 +92,8 @@ function MealTab({ meals }: { meals?: Meal[] }) {
                   spacing={[2, 3]}
                   align={["start", "center"]}
                 >
-                  <Heading size={["sm"]}>섭취 칼로리</Heading>
-                  <Text fontSize={["sm", "md"]}>
+                  <Heading fontSize={"md"}>섭취 칼로리</Heading>
+                  <Text fontSize={"md"}>
                     {meal.foods.reduce(
                       (accumulator, currentValue) =>
                         accumulator + currentValue.kcal,

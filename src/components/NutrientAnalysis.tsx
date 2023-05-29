@@ -136,23 +136,23 @@ export function TargetAchievement({
       >
         <NutrientProgressBar
           name="칼로리"
-          current={currentKcal}
-          target={targetKcal}
+          current={Math.round(currentKcal)}
+          target={Math.round(targetKcal)}
         />
         <NutrientProgressBar
           name="탄수화물"
-          current={currentCarbohydrate}
-          target={targetCarbohydrate}
+          current={Math.round(currentCarbohydrate)}
+          target={Math.round(targetCarbohydrate)}
         />
         <NutrientProgressBar
           name="단백질"
-          current={currentProtein}
-          target={targetProtein}
+          current={Math.round(currentProtein)}
+          target={Math.round(targetProtein)}
         />
         <NutrientProgressBar
           name="지방"
-          current={currentFat}
-          target={targetFat}
+          current={Math.round(currentFat)}
+          target={Math.round(targetFat)}
         />
       </Stack>
     </Stack>
