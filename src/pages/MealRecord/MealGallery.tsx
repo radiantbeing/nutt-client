@@ -8,6 +8,7 @@ import {
   Center,
   Text,
   Grid,
+  AspectRatio,
 } from "@chakra-ui/react";
 import { nanoid } from "nanoid";
 
@@ -77,14 +78,16 @@ function MealGallery({
 
         return (
           <Flex key={nanoid()}>
-            <Image
-              objectFit="cover"
-              boxSize="full"
-              src={meal.img}
-              cursor="pointer"
-              fallbackSrc="https://via.placeholder.com/150"
-              onClick={() => onImageClick(meal)}
-            />
+            <AspectRatio ratio={1} boxSize="full">
+              <Image
+                objectFit="cover"
+                boxSize="full"
+                src={meal.img}
+                cursor="pointer"
+                fallbackSrc="https://via.placeholder.com/150"
+                onClick={() => onImageClick(meal)}
+              />
+            </AspectRatio>
             <Badge position="absolute">
               {date.getDate()}일 {mealTime}
             </Badge>
