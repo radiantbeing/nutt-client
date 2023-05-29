@@ -100,29 +100,48 @@ export default function DietAnalysisPage() {
       },
     }).then((res) => {
       const { data } = res.data;
-      const { dailyKcal, dailyCarbohydrate, dailyProtein, dailyFat } = data;
+      const {
+        dailyKcal,
+        dailyCarbohydrate,
+        dailyProtein,
+        dailyFat,
+        intakeCarbohydrateSum,
+        intakeFatSum,
+        intakeKcalSum,
+        intakeProteinSum,
+      } = data;
       setTargetKcal(dailyKcal);
       setTargetCarbohydrate(dailyCarbohydrate);
       setTargetProtein(dailyProtein);
       setTargetFat(dailyFat);
+
+      let sumCarbohydrate = intakeCarbohydrateSum;
+      let sumProtein = intakeProteinSum;
+      let sumFat = intakeFatSum;
+      let sumKcal = intakeKcalSum;
+
+      let foods: any = [];
+      detectedFoods?.forEach(async (food) => {
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_NUTT_API_URL}/api/foodInfo/${food.class}`
+        );
+        foods.push(data.data);
+        setFoods(foods);
+        foods.forEach((food: any) => {
+          sumKcal += food.kcal;
+          sumProtein += food.protein;
+          sumFat += food.fat;
+          sumCarbohydrate += food.carbohydrate;
+        });
+        setKcal(Math.round(sumKcal * 1e2) / 1e2);
+        setCarbohydrate(Math.round(sumCarbohydrate * 1e2) / 1e2);
+        setProtein(Math.round(sumProtein * 1e2) / 1e2);
+        setFat(Math.round(sumFat * 1e2) / 1e2);
+      });
     });
   }, []);
 
   useEffect(() => {
-    let foods: any = [];
-    detectedFoods?.forEach(async (food) => {
-      const { data } = await axios.get(
-        `${process.env.REACT_APP_NUTT_API_URL}/api/foodInfo/${food.class}`
-      );
-      foods.push(data.data);
-      setFoods(foods);
-      foods.forEach((food: any) => {
-        setKcal(kcal + food.kcal);
-        setCarbohydrate(carbohydrate + food.carbohydrate);
-        setProtein(protein + food.protein);
-        setFat(fat + food.fat);
-      });
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -238,7 +257,6 @@ export default function DietAnalysisPage() {
               }
             }
           });
-
           setTimeout(() => navigate("/"), 1000);
         }}
       >

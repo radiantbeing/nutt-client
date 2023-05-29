@@ -126,7 +126,7 @@ export function TargetAchievement({
 }: TargetAchievementProps) {
   return (
     <Stack spacing={3}>
-      <ArticleHeading text="목표 영양소 달성량" />
+      <ArticleHeading text="목표 영양소 달성 예상치" />
       <Stack
         spacing={3}
         border="1px"
