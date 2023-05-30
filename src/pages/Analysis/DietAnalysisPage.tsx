@@ -196,6 +196,7 @@ export default function DietAnalysisPage() {
           </Stack>
         </RadioGroup>
       </Stack>
+      <NutrientAnalysisTable foods={foods} />
       <TargetAchievement
         currentKcal={kcal}
         targetKcal={targetKcal}
@@ -206,7 +207,6 @@ export default function DietAnalysisPage() {
         currentFat={fat}
         targetFat={targetFat}
       />
-      <NutrientAnalysisTable foods={foods} />
     </Stack>
   );
 

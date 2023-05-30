@@ -69,7 +69,7 @@ export function ScannedPicture({ src }: ScannedPictureProps) {
     <Stack spacing={3}>
       <ArticleHeading text="식단 사진" />
       <Box border="1px" borderColor="gray.100" borderRadius="lg" padding={2}>
-        <AspectRatio ratio={4 / 3}>
+        <AspectRatio ratio={16 / 9}>
           <Image
             src={src}
             borderRadius="lg"
