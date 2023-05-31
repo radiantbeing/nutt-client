@@ -82,7 +82,7 @@ export default function FileInput() {
                 <Text>업로드 대기 중</Text>
               </VStack>
             ) : (
-              <AspectRatio ratio={1} width="full" maxHeight={300}>
+              <AspectRatio ratio={1} width="full" maxHeight={200}>
                 <Image src={imgFile as string} />
               </AspectRatio>
             )}
