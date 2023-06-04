@@ -189,10 +189,10 @@ export function NutrientAnalysisTable({ foods }: NutrientAnalysisTableProps) {
         return (
           <Tr key={nanoid()}>
             <Td>{translator(food.name)}</Td>
-            <Td isNumeric>{food.kcal}</Td>
-            <Td isNumeric>{food.carbohydrate}</Td>
-            <Td isNumeric>{food.protein}</Td>
-            <Td isNumeric>{food.fat}</Td>
+            <Td isNumeric>{Math.round(food.kcal)}</Td>
+            <Td isNumeric>{Math.round(food.carbohydrate)}</Td>
+            <Td isNumeric>{Math.round(food.protein)}</Td>
+            <Td isNumeric>{Math.round(food.fat)}</Td>
           </Tr>
         );
       })}
@@ -203,10 +203,10 @@ export function NutrientAnalysisTable({ foods }: NutrientAnalysisTableProps) {
     <Tfoot>
       <Tr>
         <Th>합계</Th>
-        <Th isNumeric>{sum.kcal}</Th>
-        <Th isNumeric>{sum.carbohydrate}</Th>
-        <Th isNumeric>{sum.protein}</Th>
-        <Th isNumeric>{sum.fat}</Th>
+        <Th isNumeric>{Math.round(sum.kcal)}</Th>
+        <Th isNumeric>{Math.round(sum.carbohydrate)}</Th>
+        <Th isNumeric>{Math.round(sum.protein)}</Th>
+        <Th isNumeric>{Math.round(sum.fat)}</Th>
       </Tr>
     </Tfoot>
   );
