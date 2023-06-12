@@ -93,6 +93,7 @@ const ShootModePopover: FC = () => {
               icon={TbPhotoSensor2}
               text="실시간 인식 모드"
               to="/realtime-recognition"
+              isDisabled
             />
             <ShootModeOption
               icon={MdOutlinePhotoCamera}
