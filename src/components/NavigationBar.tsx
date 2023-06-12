@@ -46,7 +46,7 @@ const ShootModeOption: FC<ShootModeOptionProps> = ({
       justifyContent="center"
       fontWeight="medium"
       cursor={isDisabled ? "not-allowed" : "pointer"}
-      onClick={isDisabled ? (e) => e.preventDefault() : undefined}
+      // onClick={isDisabled ? (e) => e.preventDefault() : undefined}
     >
       <Icon
         as={icon}
