@@ -30,7 +30,7 @@ export default function SignIn() {
   const handleShowClick = () => setShowPassword(!showPassword);
 
   const header = (
-    <Header onPrevClick={() => navigate("/signup")}>로그인</Header>
+    <Header onPrevClick={() => navigate("/register")}>로그인</Header>
   );
 
   const main = (

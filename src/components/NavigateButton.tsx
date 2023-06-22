@@ -5,6 +5,7 @@ type NavigateButtonProps = {
   children: React.ReactNode;
   variant?: "solid" | "outline" | "ghost" | "link";
   colorScheme?: string;
+  isLoading?: boolean;
   onClick: () => void;
 };
 
@@ -12,6 +13,7 @@ const NavigateButton: FC<NavigateButtonProps> = ({
   children,
   variant,
   colorScheme = "green",
+  isLoading,
   onClick,
 }) => {
   return (
@@ -23,6 +25,7 @@ const NavigateButton: FC<NavigateButtonProps> = ({
         fontWeight="medium"
         variant={variant || "solid"}
         onClick={onClick}
+        isLoading={isLoading}
       >
         {children}
       </Button>

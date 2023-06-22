@@ -102,7 +102,7 @@ function PWAGuideModal() {
               mr={3}
               onClick={() => {
                 onClose();
-                navigate("/signup");
+                navigate("/register");
               }}
             >
               완료

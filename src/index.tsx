@@ -13,7 +13,6 @@ import {
   useNavigate,
 } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
-import SignUp from "./pages/SignUp/SignUp";
 import SignIn from "./pages/SignIn/SignIn";
 import DietAnalysisPage from "./pages/Analysis/DietAnalysisPage";
 import Chat from "./pages/Chat/Chat";
@@ -25,6 +24,7 @@ import MealRecord from "./pages/MealRecord/MealRecord";
 import Setting from "./pages/Setting/Setting";
 import PhotoRecognition from "./pages/PhotoRecognition/PhotoRecognition";
 import RealtimeRecognition from "./pages/RealtimeRecognition/RealtimeRecognition";
+import Registration from "./pages/Registration/Registration";
 
 function ProtectedRoute(props: { children: any }) {
   const navigate = useNavigate();
@@ -61,10 +61,10 @@ const router = createBrowserRouter(
     <Route errorElement={<ErrorPage />}>
       <Route index element={<Index />} />
       <Route
-        path="signup"
+        path="register"
         element={
           <ForbiddenRoute>
-            <SignUp />
+            <Registration />
           </ForbiddenRoute>
         }
       />
