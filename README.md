@@ -21,8 +21,9 @@
 
 ### Using Basic Method
 
-1. `.env.template` 파일명을 `.env`로 변경
-2. `.env` 수정
+1. [`Node.js 16.20.2`](https://nodejs.org/ko/download/releases) 설치
+2. `.env.template` 파일명을 `.env`로 변경
+3. `.env` 수정
 
    _예시:_
 
@@ -32,7 +33,7 @@
    REACT_APP_PHOTO_DETECTION_URL=https://detection.nutt.app
    ```
 
-3. 프로덕션을 위한 빌드 스크립트 실행
+4. 프로덕션을 위한 빌드 스크립트 실행
 
    ```
    npm run build
