@@ -24,7 +24,6 @@ import { useEffect } from "react";
 import MealRecord from "./pages/MealRecord/MealRecord";
 import Setting from "./pages/Setting/Setting";
 import PhotoRecognition from "./pages/PhotoRecognition/PhotoRecognition";
-import RealtimeRecognition from "./pages/RealtimeRecognition/RealtimeRecognition";
 
 function ProtectedRoute(props: { children: any }) {
   const navigate = useNavigate();
@@ -113,14 +112,6 @@ const router = createBrowserRouter(
         element={
           <ProtectedRoute>
             <PhotoRecognition />
-          </ProtectedRoute>
-        }
-      />
-      <Route
-        path="realtime-recognition"
-        element={
-          <ProtectedRoute>
-            <RealtimeRecognition />
           </ProtectedRoute>
         }
       />
